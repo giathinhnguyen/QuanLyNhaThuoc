@@ -1,8 +1,9 @@
-import java.time.LocalDate;
+
+import java.util.Date;
 
 public abstract class HoaDon {
     public String maHoaDon;
-    public LocalDate ngayLap;
+    public Date ngayLap;
     public double tongTien;
 
     public String getMaHoaDon() {
@@ -11,10 +12,10 @@ public abstract class HoaDon {
     public void setMaHoaDon(String maHoaDon) {
         this.maHoaDon = maHoaDon;
     }
-    public LocalDate getNgayLap() {
+    public Date getNgayLap() {
         return ngayLap;
     }
-    public void setNgayLap(LocalDate ngayLap) {
+    public void setNgayLap(Date ngayLap) {
         this.ngayLap = ngayLap;
     }
     public double getTongTien() {
@@ -24,7 +25,7 @@ public abstract class HoaDon {
         this.tongTien = tongTien;
     }
 
-    public HoaDon(String maHoaDon, LocalDate ngayLap, double tongTien) {
+    public HoaDon(String maHoaDon, Date ngayLap, double tongTien) {
         this.maHoaDon = maHoaDon;
         this.ngayLap = ngayLap;
         this.tongTien = tongTien;
