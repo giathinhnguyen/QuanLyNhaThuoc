@@ -14,9 +14,9 @@ public class MyPham extends  SanPham{
         this.loaiDaPhuHop = loaiDaPhuHop;
     }
 
-    public MyPham(String maSanPham, String tenSanPham, String loaiSanPham, String donViTinh, String maNhaCungCap,
+    public MyPham(String maSanPham, String tenSanPham, String loaiSanPham,String maNhaCungCap,
                   double giaNhap, double giaBan, int soLuongTon, String loaiMyPham, String loaiDaPhuHop) {
-        super(maSanPham, tenSanPham, loaiSanPham, donViTinh, maNhaCungCap, giaNhap, giaBan, soLuongTon);
+        super(maSanPham, tenSanPham, loaiSanPham,maNhaCungCap, giaNhap, giaBan, soLuongTon);
         this.loaiMyPham = loaiMyPham;
         this.loaiDaPhuHop = loaiDaPhuHop;
     }
@@ -27,7 +27,6 @@ public class MyPham extends  SanPham{
                 "Mã sản phẩm: '" + maSanPham + '\'' +
                 ", Tên: '" + tenSanPham + '\'' +
                 ", Loại sản phẩm: '" + loaiSanPham + '\'' +
-                ", Đơn vị tính: '" + donViTinh + '\'' +
                 ", Mã nhà cung cấp: '" + maNhaCungCap + '\'' +
                 ", Giá nhập: " + giaNhap +
                 ", Giá bán: " + giaBan +

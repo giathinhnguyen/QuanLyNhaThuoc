@@ -21,10 +21,10 @@ public class Thuoc extends SanPham{
         this.canToaBacSi = canToaBacSi;
     }
 
-    public Thuoc(String maSanPham, String tenSanPham, String loaiSanPham, String donViTinh,
+    public Thuoc(String maSanPham, String tenSanPham, String loaiSanPham,
                  String maNhaCungCap, double giaNhap, double giaBan, int soLuongTon, String loaiThuoc,
                  String congDung, boolean canToaBacSi) {
-        super(maSanPham, tenSanPham, loaiSanPham, donViTinh, maNhaCungCap, giaNhap, giaBan, soLuongTon);
+        super(maSanPham, tenSanPham, loaiSanPham, maNhaCungCap, giaNhap, giaBan, soLuongTon);
         this.loaiThuoc = loaiThuoc;
         this.congDung = congDung;
         this.canToaBacSi = canToaBacSi;
@@ -37,7 +37,6 @@ public class Thuoc extends SanPham{
                     "Mã sản phẩm: '" + maSanPham + '\'' +
                     ", Tên: '" + tenSanPham + '\'' +
                     ", Loại sản phẩm: '" + loaiSanPham + '\'' +
-                    ", Đơn vị tính: '" + donViTinh + '\'' +
                     ", Mã nhà cung cấp: '" + maNhaCungCap + '\'' +
                     ", Giá nhập: " + giaNhap +
                     ", Giá bán: " + giaBan +

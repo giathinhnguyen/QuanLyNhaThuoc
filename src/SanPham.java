@@ -1,7 +1,7 @@
 import java.time.LocalDate;
 
 public abstract class SanPham implements LayThongTin {
-    public String maSanPham, tenSanPham, loaiSanPham, donViTinh;
+    public String maSanPham, tenSanPham, loaiSanPham;
     public String maNhaCungCap;
     public double giaNhap, giaBan;
     public int soLuongTon;
@@ -23,12 +23,6 @@ public abstract class SanPham implements LayThongTin {
     }
     public void setLoaiSanPham(String loaiSanPham) {
         this.loaiSanPham = loaiSanPham;
-    }
-    public String getDonViTinh() {
-        return donViTinh;
-    }
-    public void setDonViTinh(String donViTinh) {
-        this.donViTinh = donViTinh;
     }
     public String getMaNhaCungCap() {
         return maNhaCungCap;
@@ -55,12 +49,11 @@ public abstract class SanPham implements LayThongTin {
         this.soLuongTon = soLuongTon;
     }
 
-    public SanPham(String maSanPham, String tenSanPham, String loaiSanPham, String donViTinh,
+    public SanPham(String maSanPham, String tenSanPham, String loaiSanPham,
                    String maNhaCungCap, double giaNhap, double giaBan, int soLuongTon) {
         this.maSanPham = maSanPham;
         this.tenSanPham = tenSanPham;
         this.loaiSanPham = loaiSanPham;
-        this.donViTinh = donViTinh;
         this.maNhaCungCap = maNhaCungCap;
         this.giaNhap = giaNhap;
         this.giaBan = giaBan;
