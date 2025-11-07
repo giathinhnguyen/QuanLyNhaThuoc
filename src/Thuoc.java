@@ -1,4 +1,5 @@
-public class Thuoc extends SanPham{
+
+public class Thuoc extends SanPham implements LayThongTin{
     public String loaiThuoc, congDung;
     public boolean canToaBacSi;
 
@@ -46,4 +47,12 @@ public class Thuoc extends SanPham{
                     ", Cần toa bác sĩ: " + (canToaBacSi ? "Có" : "Không") +
                     '}';
     }
+    @Override
+    public String chuyenSangDinhDangTXT() {
+        return maSanPham + "," + tenSanPham + "," + loaiSanPham + "," +
+               maNhaCungCap + "," + giaNhap + "," + giaBan + "," +
+               soLuongTon + "," + loaiThuoc + "," + congDung + "," +
+               (canToaBacSi ? "1" : "0");
+    }
 }
+

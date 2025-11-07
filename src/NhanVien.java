@@ -1,5 +1,6 @@
 public abstract class NhanVien {
     public String maNhanVien;
+    public String tenNhanVien;
     public int soNamLam;
     public static double luongCoBan = 1150;
 
@@ -8,6 +9,12 @@ public abstract class NhanVien {
     }
     public void setMaNhanVien(String maNhanVien) {
         this.maNhanVien = maNhanVien;
+    }
+    public String getTenNhanVien() {
+        return this.tenNhanVien;
+    }
+    public void setTenNhanVien(String tenNhanVien) {
+        this.tenNhanVien = tenNhanVien;
     }
     public int getSoNamLam() {
         return soNamLam;

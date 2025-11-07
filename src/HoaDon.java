@@ -1,9 +1,19 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package nhathuoc;
 
-import java.util.Date;
+/**
+ *
+ * @author Uyen
+ */
+
+import java.time.LocalDate;
 
 public abstract class HoaDon {
     public String maHoaDon;
-    public Date ngayLap;
+    public LocalDate ngayLap;
     public double tongTien;
 
     public String getMaHoaDon() {
@@ -12,10 +22,10 @@ public abstract class HoaDon {
     public void setMaHoaDon(String maHoaDon) {
         this.maHoaDon = maHoaDon;
     }
-    public Date getNgayLap() {
+    public LocalDate getNgayLap() {
         return ngayLap;
     }
-    public void setNgayLap(Date ngayLap) {
+    public void setNgayLap(LocalDate ngayLap) {
         this.ngayLap = ngayLap;
     }
     public double getTongTien() {
@@ -25,7 +35,7 @@ public abstract class HoaDon {
         this.tongTien = tongTien;
     }
 
-    public HoaDon(String maHoaDon, Date ngayLap, double tongTien) {
+    public HoaDon(String maHoaDon, LocalDate ngayLap, double tongTien) {
         this.maHoaDon = maHoaDon;
         this.ngayLap = ngayLap;
         this.tongTien = tongTien;
