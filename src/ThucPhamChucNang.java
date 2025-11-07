@@ -1,4 +1,6 @@
-public class ThucPhamChucNang extends SanPham{
+import java.time.LocalDate;
+
+public class ThucPhamChucNang extends SanPham implements LayThongTin{
     public String loaiThucPhamChucNang, boSungDuongChat;
     public int tuoiSuDung;
 
@@ -22,9 +24,9 @@ public class ThucPhamChucNang extends SanPham{
     }
 
     public ThucPhamChucNang(String maSanPham, String tenSanPham, String loaiSanPham,
-                            String maNhaCungCap, double giaNhap, double giaBan, int soLuongTon,
+                            String maNhaCungCap, double giaNhap, double giaBan, int soLuongTon, LocalDate HSD,
                             String loaiThucPhamChucNang, String boSungDuongChat, int tuoiSuDung) {
-        super(maSanPham, tenSanPham, loaiSanPham,maNhaCungCap, giaNhap, giaBan, soLuongTon);
+        super(maSanPham, tenSanPham, loaiSanPham,maNhaCungCap, giaNhap, giaBan, soLuongTon, HSD);
         this.loaiThucPhamChucNang = loaiThucPhamChucNang;
         this.boSungDuongChat = boSungDuongChat;
         this.tuoiSuDung = tuoiSuDung;
@@ -41,8 +43,30 @@ public class ThucPhamChucNang extends SanPham{
                 ", Giá nhập: " + giaNhap +
                 ", Giá bán: " + giaBan +
                 ", Số lượng tồn: " + soLuongTon +
+                ", Hạn sử dụng: '" + HSD + '\'' +
                 ", Loại thực phẩm chức năng: '" + loaiThucPhamChucNang + '\'' +
                 ", Bổ sung dưỡng chất: '" + boSungDuongChat + '\'' +
                 '}';
+    }
+    @Override
+    public String chuyenSangDinhDangTXT(){
+        return String.join(";",
+                "ThucPhamChucNang",
+                maSanPham, tenSanPham,
+                String.valueOf(giaBan),
+                String.valueOf(giaNhap),
+                String.valueOf(soLuongTon),
+                HSD.toString(),
+                loaiSanPham, maNhaCungCap,
+                loaiThucPhamChucNang, boSungDuongChat,
+                String.valueOf(tuoiSuDung)
+        );
+    }
+    @Override
+    public boolean kiemTraHopLe() {
+        if (!super.kiemTraHopLe()) return false; // kiểm tra chung
+        if (loaiThucPhamChucNang == null || loaiThucPhamChucNang.trim().isEmpty()) return false;
+        if (boSungDuongChat == null || boSungDuongChat.trim().isEmpty()) return false;
+        return true;
     }
 }

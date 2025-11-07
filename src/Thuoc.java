@@ -1,4 +1,6 @@
-public class Thuoc extends SanPham{
+import java.time.LocalDate;
+
+public class Thuoc extends SanPham implements LayThongTin{
     public String loaiThuoc, congDung;
     public boolean canToaBacSi;
 
@@ -22,9 +24,10 @@ public class Thuoc extends SanPham{
     }
 
     public Thuoc(String maSanPham, String tenSanPham, String loaiSanPham,
-                 String maNhaCungCap, double giaNhap, double giaBan, int soLuongTon, String loaiThuoc,
+                 String maNhaCungCap, double giaNhap, double giaBan, int soLuongTon, LocalDate HSD,
+                 String loaiThuoc,
                  String congDung, boolean canToaBacSi) {
-        super(maSanPham, tenSanPham, loaiSanPham, maNhaCungCap, giaNhap, giaBan, soLuongTon);
+        super(maSanPham, tenSanPham, loaiSanPham, maNhaCungCap, giaNhap, giaBan, soLuongTon, HSD);
         this.loaiThuoc = loaiThuoc;
         this.congDung = congDung;
         this.canToaBacSi = canToaBacSi;
@@ -41,9 +44,33 @@ public class Thuoc extends SanPham{
                     ", Giá nhập: " + giaNhap +
                     ", Giá bán: " + giaBan +
                     ", Số lượng tồn: " + soLuongTon +
+                    ", Hạn sử dụng: '" + HSD + '\'' +
                     ", Loại thuốc: '" + loaiThuoc + '\'' +
                     ", Công dụng: '" + congDung + '\'' +
                     ", Cần toa bác sĩ: " + (canToaBacSi ? "Có" : "Không") +
                     '}';
+    }
+
+    @Override
+    public String chuyenSangDinhDangTXT(){
+        return String.join(";",
+                "Thuoc",
+                maSanPham, tenSanPham,
+                String.valueOf(giaBan),
+                String.valueOf(giaNhap),
+                String.valueOf(soLuongTon),
+                HSD.toString(),
+                loaiSanPham, maNhaCungCap,
+                loaiThuoc, congDung,
+                String.valueOf(canToaBacSi)
+        );
+    }
+
+    @Override
+    public boolean kiemTraHopLe() {
+        if (!super.kiemTraHopLe()) return false;
+        if (loaiThuoc == null || loaiThuoc.trim().isEmpty()) return false;
+        if (congDung == null || congDung.trim().isEmpty()) return false;
+        return true;
     }
 }

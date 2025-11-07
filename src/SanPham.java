@@ -1,6 +1,6 @@
 import java.time.LocalDate;
 
-public abstract class SanPham implements LayThongTin {
+public abstract class SanPham implements LayThongTin{
     public String maSanPham, tenSanPham, loaiSanPham;
     public String maNhaCungCap;
     public double giaNhap, giaBan;
@@ -48,9 +48,15 @@ public abstract class SanPham implements LayThongTin {
     public void setSoLuongTon(int soLuongTon) {
         this.soLuongTon = soLuongTon;
     }
+    public  LocalDate getHSD(){
+        return HSD;
+    }
+    public void setHSD(LocalDate HSD){
+        this.HSD = HSD;
+    }
 
     public SanPham(String maSanPham, String tenSanPham, String loaiSanPham,
-                   String maNhaCungCap, double giaNhap, double giaBan, int soLuongTon) {
+                   String maNhaCungCap, double giaNhap, double giaBan, int soLuongTon, LocalDate HSD) {
         this.maSanPham = maSanPham;
         this.tenSanPham = tenSanPham;
         this.loaiSanPham = loaiSanPham;
@@ -58,9 +64,22 @@ public abstract class SanPham implements LayThongTin {
         this.giaNhap = giaNhap;
         this.giaBan = giaBan;
         this.soLuongTon = soLuongTon;
+        this.HSD = HSD;
     }
 
     public double tinhLoiNhuan1SanPham(){
         return this.giaBan-this.giaNhap;
+    }
+
+    public boolean kiemTraHopLe(){
+        if (maSanPham == null || maSanPham.trim().isEmpty()) return false;
+        if (tenSanPham == null || tenSanPham.trim().isEmpty()) return false;
+        if (loaiSanPham == null || loaiSanPham.trim().isEmpty()) return false;
+        if (maNhaCungCap == null || maNhaCungCap.trim().isEmpty()) return false;
+        if (giaNhap <= 0 || giaBan <= 0) return false;
+        if (soLuongTon < 0) return false;
+        if (giaBan < giaNhap) return false;
+
+        return true; // Hợp lệ
     }
 }
