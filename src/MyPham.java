@@ -1,6 +1,6 @@
 import java.time.LocalDate;
 
-public class MyPham extends  SanPham implements LayThongTin{
+public class MyPham extends  SanPham{
     public String loaiMyPham, loaiDaPhuHop;
 
     public String getLoaiMyPham() {
@@ -25,38 +25,33 @@ public class MyPham extends  SanPham implements LayThongTin{
 
     @Override
     public String layThongTinDayDu() {
-        return "Mỹ Phẩm {" +
-                "Mã sản phẩm: '" + maSanPham + '\'' +
-                ", Tên: '" + tenSanPham + '\'' +
-                ", Loại sản phẩm: '" + loaiSanPham + '\'' +
-                ", Mã nhà cung cấp: '" + maNhaCungCap + '\'' +
-                ", Giá nhập: " + giaNhap +
-                ", Giá bán: " + giaBan +
-                ", Số lượng tồn: " + soLuongTon +
-                ", Hạn sử dụng: '" + HSD + '\'' +
-                ", Loại mỹ phẩm: '" + loaiMyPham + '\'' +
-                ", Dành cho da: '" + loaiDaPhuHop + '\'' + +
-                '}';
-    }
-    @Override
-    public String chuyenSangDinhDangTXT(){
-        return String.join(";",
-                "MyPham",
-                maSanPham, tenSanPham,
-                String.valueOf(giaBan),
-                String.valueOf(giaNhap),
-                String.valueOf(soLuongTon),
+        return String.format(
+                "| %-10s | %-30s | Gia Ban: %,.0f | Ton: %-5d | HSD: %-10s | Loai MP: %s | Cho Da: %s",
+                maSanPham,
+                tenSanPham,
+                giaBan,
+                soLuongTon,
                 HSD.toString(),
-                loaiSanPham, maNhaCungCap,
-                loaiMyPham, loaiDaPhuHop
+                loaiMyPham,
+                loaiDaPhuHop
         );
     }
 
     @Override
-    public boolean kiemTraHopLe() {
-        if (!super.kiemTraHopLe()) return false;
-        if (loaiMyPham == null || loaiMyPham.trim().isEmpty()) return false;
-        if (loaiDaPhuHop == null || loaiDaPhuHop.trim().isEmpty()) return false;
-        return true;
+    public String chuyenSangDinhDangTXT(){
+        return String.join(";",
+                "MyPham",
+                maSanPham,
+                tenSanPham,
+                String.valueOf(giaBan),
+                String.valueOf(giaNhap),
+                String.valueOf(soLuongTon),
+                HSD.toString(),
+                loaiSanPham,
+                maNhaCungCap,
+                loaiMyPham,
+                loaiDaPhuHop
+        );
     }
+
 }

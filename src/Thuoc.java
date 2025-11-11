@@ -1,6 +1,7 @@
+
 import java.time.LocalDate;
 
-public class Thuoc extends SanPham implements LayThongTin{
+public class Thuoc extends SanPham{
     public String loaiThuoc, congDung;
     public boolean canToaBacSi;
 
@@ -16,9 +17,10 @@ public class Thuoc extends SanPham implements LayThongTin{
     public void setCongDung(String congDung) {
         this.congDung = congDung;
     }
-    public boolean isCanToaBacSi() {
+    public boolean getCanToaBacSi() {
         return canToaBacSi;
     }
+
     public void setCanToaBacSi(boolean canToaBacSi) {
         this.canToaBacSi = canToaBacSi;
     }
@@ -33,44 +35,25 @@ public class Thuoc extends SanPham implements LayThongTin{
         this.canToaBacSi = canToaBacSi;
     }
 
-
     @Override
     public String layThongTinDayDu() {
-            return "Thuoc {" +
-                    "Mã sản phẩm: '" + maSanPham + '\'' +
-                    ", Tên: '" + tenSanPham + '\'' +
-                    ", Loại sản phẩm: '" + loaiSanPham + '\'' +
-                    ", Mã nhà cung cấp: '" + maNhaCungCap + '\'' +
-                    ", Giá nhập: " + giaNhap +
-                    ", Giá bán: " + giaBan +
-                    ", Số lượng tồn: " + soLuongTon +
-                    ", Hạn sử dụng: '" + HSD + '\'' +
-                    ", Loại thuốc: '" + loaiThuoc + '\'' +
-                    ", Công dụng: '" + congDung + '\'' +
-                    ", Cần toa bác sĩ: " + (canToaBacSi ? "Có" : "Không") +
-                    '}';
-    }
-
-    @Override
-    public String chuyenSangDinhDangTXT(){
-        return String.join(";",
-                "Thuoc",
-                maSanPham, tenSanPham,
-                String.valueOf(giaBan),
-                String.valueOf(giaNhap),
-                String.valueOf(soLuongTon),
+        return String.format(
+                "| %-10s | %-30s | Gia Ban: %,.0f | Ton: %-5d | HSD: %-10s | Can Toa: %-3s | Loai Thuoc: %s",
+                maSanPham,
+                tenSanPham,
+                giaBan,
+                soLuongTon,
                 HSD.toString(),
-                loaiSanPham, maNhaCungCap,
-                loaiThuoc, congDung,
-                String.valueOf(canToaBacSi)
+                (canToaBacSi ? "CO" : "KHONG"),
+                loaiThuoc
         );
     }
-
     @Override
-    public boolean kiemTraHopLe() {
-        if (!super.kiemTraHopLe()) return false;
-        if (loaiThuoc == null || loaiThuoc.trim().isEmpty()) return false;
-        if (congDung == null || congDung.trim().isEmpty()) return false;
-        return true;
+    public String chuyenSangDinhDangTXT() {
+        return String.join(";",
+                "Thuoc", maSanPham, tenSanPham, String.valueOf(giaBan), String.valueOf(giaNhap), String.valueOf(soLuongTon),
+                HSD.toString(), loaiThuoc, maNhaCungCap, congDung,
+                (canToaBacSi ? "true" : "false")
+        );
     }
 }

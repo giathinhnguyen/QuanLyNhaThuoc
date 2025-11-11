@@ -1,6 +1,6 @@
 import java.time.LocalDate;
 
-public class ThucPhamChucNang extends SanPham implements LayThongTin{
+public class ThucPhamChucNang extends SanPham{
     public String loaiThucPhamChucNang, boSungDuongChat;
     public int tuoiSuDung;
 
@@ -34,39 +34,34 @@ public class ThucPhamChucNang extends SanPham implements LayThongTin{
 
     @Override
     public String layThongTinDayDu() {
-        return "Thực phẩm chức năng {" +
-                "Mã sản phẩm: '" + maSanPham + '\'' +
-                ", Tên: '" + tenSanPham + '\'' +
-                ", Loại sản phẩm: '" + loaiSanPham + '\'' +
-                ", Độ tuổi sử dụng: '" + tuoiSuDung + '\'' +
-                ", Mã nhà cung cấp: '" + maNhaCungCap + '\'' +
-                ", Giá nhập: " + giaNhap +
-                ", Giá bán: " + giaBan +
-                ", Số lượng tồn: " + soLuongTon +
-                ", Hạn sử dụng: '" + HSD + '\'' +
-                ", Loại thực phẩm chức năng: '" + loaiThucPhamChucNang + '\'' +
-                ", Bổ sung dưỡng chất: '" + boSungDuongChat + '\'' +
-                '}';
+        // Dinh dang hien thi chi tiet cho nguoi dung de doc
+        return String.format(
+                "| %-10s | %-30s | Gia Ban: %,.0f | Ton: %-5d | HSD: %-10s | Tuoi SD: %-5d | Loai TPCN: %s | Duong Chat: %s",
+                maSanPham,
+                tenSanPham,
+                giaBan,
+                soLuongTon,
+                HSD.toString(),
+                tuoiSuDung,
+                loaiThucPhamChucNang,
+                boSungDuongChat
+        );
     }
     @Override
     public String chuyenSangDinhDangTXT(){
         return String.join(";",
                 "ThucPhamChucNang",
-                maSanPham, tenSanPham,
+                maSanPham,
+                tenSanPham,
                 String.valueOf(giaBan),
                 String.valueOf(giaNhap),
                 String.valueOf(soLuongTon),
                 HSD.toString(),
-                loaiSanPham, maNhaCungCap,
-                loaiThucPhamChucNang, boSungDuongChat,
+                loaiSanPham,
+                maNhaCungCap,
+                loaiThucPhamChucNang,
+                boSungDuongChat,
                 String.valueOf(tuoiSuDung)
         );
-    }
-    @Override
-    public boolean kiemTraHopLe() {
-        if (!super.kiemTraHopLe()) return false; // kiểm tra chung
-        if (loaiThucPhamChucNang == null || loaiThucPhamChucNang.trim().isEmpty()) return false;
-        if (boSungDuongChat == null || boSungDuongChat.trim().isEmpty()) return false;
-        return true;
     }
 }

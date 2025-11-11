@@ -1,0 +1,31 @@
+# ================= THUOC =================
+Thuoc;T001;Paracetamol 500mg;2500;1500;120;2026-03-01;Giam dau, ha sot;NCC003;Thuoc vien;Ha sot, giam dau;false
+Thuoc;T002;Amoxicillin 500mg;3500;2000;80;2026-08-15;Khang sinh;NCC001;Thuoc vien;Dieu tri nhiem khuan;true
+Thuoc;T003;Vitamin C 1000mg;5000;3000;200;2027-02-01;Bo sung vitamin;NCC005;Vien sui;Tang de khang;false
+Thuoc;T004;Omeprazol 20mg;4200;2500;100;2026-12-31;Dieu tri da day;NCC002;Vien nang;Giam acid da day;true
+Thuoc;T005;Loratadin 10mg;3000;1800;150;2027-05-10;Chong di ung;NCC004;Vien nen;Giam di ung, man ngua;false
+Thuoc;T006;Ibuprofen 400mg;3500;2200;180;2027-08-01;Giam dau, khang viem;NCC003;Vien nen;Giam dau, ha sot;false
+
+# ================= THUC PHAM CHUC NANG =================
+ThucPhamChucNang;TP001;Collagen Dang Nuoc;250000;180000;40;2026-09-01;Bo sung collagen;NCC001;Dep da;Collagen peptide;18
+ThucPhamChucNang;TP002;Omega 3 Fish Oil;320000;250000;60;2026-06-01;Bo nao;NCC005;Bo sung dau ca;Omega-3;12
+ThucPhamChucNang;TP003;Vitamin Tong Hop Centrum;480000;350000;90;2027-01-01;Bo sung vitamin;NCC002;Bo sung khoang chat;Vitamin A,B,C,E;18
+ThucPhamChucNang;TP004;Probiotic Kids;150000;110000;70;2026-03-01;Ho tro tieu hoa;NCC004;Men vi sinh;Lactobacillus;3
+ThucPhamChucNang;TP005;Canxi Nano Plus D3;280000;220000;85;2026-10-01;Bo sung canxi;NCC003;Ho tro xuong;Canxi + Vitamin D3;10
+ThucPhamChucNang;TP006;Ginkgo Biloba Extract;300000;230000;75;2026-09-10;Tang tri nho;NCC001;Thao duoc;Ginkgo biloba;18
+
+# ================= MY PHAM =================
+MyPham;MP001;Kem Duong Am Nivea;120000;90000;200;2027-01-10;Kem duong;NCC005;Kem;Moi loai da
+MyPham;MP002;Sua Rua Mat Cerave;250000;180000;150;2026-08-20;Sua rua mat;NCC002;Dang gel;Da nhay cam
+MyPham;MP003;Kem Chong Nang Anessa;480000;360000;100;2026-05-01;Kem chong nang;NCC004;Kem;Da dau
+MyPham;MP004;Serum Vitamin C;320000;250000;80;2027-02-01;Serum duong da;NCC001;Serum;Da kho
+MyPham;MP005;Toner Simple;150000;100000;120;2026-12-31;Nuoc hoa hong;NCC003;Nuoc;Moi loai da
+MyPham;MP006;Kem Duong Trang Olay;280000;200000;90;2027-04-01;Kem duong trang;NCC005;Kem;Da thuong
+
+# ================= DUNG CU Y TE =================
+DungCuYTe;DC001;Nhiet ke dien tu Omron;150000;100000;60;2030-01-01;Dung cu do;NCC002;Nhua ABS;Nhat Ban
+DungCuYTe;DC002;May Do Huyet Ap Microlife;750000;550000;40;2030-01-01;Thiet bi dien tu;NCC004;Nhua cao cap;Thuy Si
+DungCuYTe;DC003;Bong Gac Tiet Trung;15000;8000;500;2027-07-01;Vat tu y te;NCC001;Bong y te;Viet Nam
+DungCuYTe;DC004;Khau Trang 4 Lop;2000;1000;1000;2028-01-01;Bao ho;NCC005;Vai khang khuan;Viet Nam
+DungCuYTe;DC005;Bang Gac Y Te Urgo;25000;15000;300;2027-06-01;Bang bo vet thuong;NCC003;Vai khong det;Phap
+DungCuYTe;DC006;May Do Nhiet Do Hong Ngoai;350000;250000;55;2030-06-01;Thiet bi dien tu;NCC002;Nhua ABS;Trung Quoc

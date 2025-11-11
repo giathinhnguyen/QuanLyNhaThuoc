@@ -55,6 +55,7 @@ public abstract class SanPham implements LayThongTin{
         this.HSD = HSD;
     }
 
+    public SanPham(){}
     public SanPham(String maSanPham, String tenSanPham, String loaiSanPham,
                    String maNhaCungCap, double giaNhap, double giaBan, int soLuongTon, LocalDate HSD) {
         this.maSanPham = maSanPham;

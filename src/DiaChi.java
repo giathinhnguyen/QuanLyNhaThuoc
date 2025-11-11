@@ -1,5 +1,7 @@
-public class DiaChi implements KiemTraHopLe,LayThongTin{
-    public String tinh, quan, phuong, soNha;
+import java.util.Scanner;
+
+public class DiaChi implements LayThongTin{
+    public String tinh, quan, duong, soNha;
 
     public String getTinh() {
         return tinh;
@@ -13,11 +15,11 @@ public class DiaChi implements KiemTraHopLe,LayThongTin{
     public void setQuan(String quan) {
         this.quan = quan;
     }
-    public String getPhuong() {
-        return phuong;
+    public String getDuong() {
+        return duong;
     }
-    public void setPhuong(String phuong) {
-        this.phuong = phuong;
+    public void setDuong(String phuong) {
+        this.duong = phuong;
     }
     public String getSoNha() {
         return soNha;
@@ -26,22 +28,37 @@ public class DiaChi implements KiemTraHopLe,LayThongTin{
         this.soNha = soNha;
     }
 
-    public DiaChi(String tinh, String quan, String phuong, String soNha) {
+    public DiaChi(){}
+    public DiaChi(String tinh, String quan, String duong, String soNha) {
         this.tinh = tinh;
         this.quan = quan;
-        this.phuong = phuong;
+        this.duong = duong;
         this.soNha = soNha;
     }
+    public DiaChi nhapDiaChi(){
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Nhap tinh: ");
+        String tinh = sc.nextLine();
+        System.out.print("Nhap quan: ");
+        String quan = sc.nextLine();
+        System.out.print("Nhap duong: ");
+        String duong = sc.nextLine();
+        System.out.print("Nhap so nha: ");
+        String soNha = sc.nextLine();
+        return new DiaChi(tinh, quan, duong, soNha);
+    }
+    public String[] getTatCaThuocTinh() {
+        return new String[]{soNha, duong, quan, tinh};
+    }
     @Override
-    public boolean kiemTraHopLe() {
-        return tinh != null && !tinh.trim().isEmpty()
-                && quan != null && !quan.trim().isEmpty()
-                && phuong != null && !phuong.trim().isEmpty()
-                && soNha != null && !soNha.trim().isEmpty();
+    public String layThongTinDayDu() {
+        return soNha + ", " + duong + ", " + quan + ", " + tinh;
     }
 
     @Override
-    public String layThongTinDayDu() {
-        return soNha + ", " + phuong + ", " + quan + ", " + tinh;
+    public String chuyenSangDinhDangTXT() {
+        return String.join(";",
+                soNha,duong,quan,tinh
+        );
     }
 }

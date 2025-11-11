@@ -21,6 +21,7 @@ public abstract class Nguoi {
         return gioiTinh;
     }
     public void setGioiTinh(String gioiTinh) {
+        kiemTraGioiTinh(gioiTinh);
         this.gioiTinh = gioiTinh;
     }
     public LocalDate getNgaySinh() {
@@ -37,6 +38,8 @@ public abstract class Nguoi {
         this.diaChi = diaChi;
     }
 
+    public Nguoi(){
+    }
     public Nguoi(String hoTen, String SDT, String gioiTinh, LocalDate ngaySinh, DiaChi diaChi) {
         this.hoTen = hoTen;
         this.SDT = SDT;
@@ -44,10 +47,11 @@ public abstract class Nguoi {
         this.ngaySinh = ngaySinh;
         this.diaChi = diaChi;
     }
-    public String layThongTinDiaChi() {
-        if (diaChi == null) {
-            return "Chưa có địa chỉ";
+    public boolean kiemTraGioiTinh(String gt){
+        if(!gioiTinh.equalsIgnoreCase("Nam") && !gioiTinh.equalsIgnoreCase("Nu")){
+            gioiTinh = "Nam";
+            return false;
         }
-        return diaChi.layThongTinDayDu();
+        return true;
     }
 }

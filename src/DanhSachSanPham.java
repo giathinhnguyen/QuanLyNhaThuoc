@@ -4,12 +4,12 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 
-public class DanhSachSanPham implements ChucNang,Doc_Ghi{
+public class DanhSachSanPham implements ChucNang<SanPham>,Doc_Ghi{
     public ArrayList<SanPham> danhSachSanPham = new ArrayList<>();
 
     public DanhSachSanPham() {
@@ -26,11 +26,7 @@ public class DanhSachSanPham implements ChucNang,Doc_Ghi{
         this.danhSachSanPham = danhSachSanPham;
     }
 
-    /**
-     * Tìm kiếm sản phẩm theo từ khóa (mã, tên, loại, NCC)
-     * @param tuKhoa Từ khóa tìm kiếm (không phân biệt hoa thường)
-     * @return SanPham nếu tìm thấy, null nếu không
-     */
+    @Override
     public ArrayList<SanPham> timKiemDanhSach(String tuKhoa){
         ArrayList<SanPham> ketQua = new ArrayList<>();
         if(tuKhoa == null || tuKhoa.trim().isEmpty()){
@@ -79,23 +75,39 @@ public class DanhSachSanPham implements ChucNang,Doc_Ghi{
         }
         return ketQua;
     }
-
-    public SanPham timKiemSanPham(String tuKhoa) {
+    @Override
+    public SanPham timKiemDoiTuong(String tuKhoa) {
         ArrayList<SanPham> ketQua = timKiemDanhSach(tuKhoa);
         if (ketQua.isEmpty()) {
             return null;
         }
         if (ketQua.size() > 1) {
-            System.out.println("Cảnh báo: Tìm thấy " + ketQua.size() + " sản phẩm khớp từ khóa!");
-            System.out.println("Trả về sản phẩm đầu tiên:");
+            System.out.println("Canh bao: Tim thay " + ketQua.size() + " sản phẩm khớp từ khóa!");
+            System.out.println("Tra ve san pham đau tien:");
             System.out.println(ketQua.get(0).layThongTinDayDu());
         }
         return ketQua.get(0);
     }
+
+    @Override
+    public void timKiem(){
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Nhap ma/ten doi tuong can tim kiem: ");
+        String tuKhoa = sc.nextLine();
+        SanPham ketQua = timKiemDoiTuong(tuKhoa);
+        System.out.println("---------------Ket qua tim kiem---------------");
+        System.out.println(ketQua.layThongTinDayDu());
+    }
+    @Override
+    public boolean tonTaiDoiTuong(String maSP){
+        if(timKiemDoiTuong(maSP) == null)
+            return false;
+        return true;
+    }
+
     @Override
     public void docFile(String fileName) {
         danhSachSanPham.clear();
-        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))){
             String line;
             while ((line = br.readLine()) != null) {
@@ -110,7 +122,7 @@ public class DanhSachSanPham implements ChucNang,Doc_Ghi{
                     case "Thuoc":
                         sp = new Thuoc(
                                 parts[1],parts[2],parts[7],parts[8],Double.parseDouble(parts[4]), Double.parseDouble(parts[3]),
-                                Integer.parseInt(parts[5]),LocalDate.parse(parts[6], fmt),parts[9],parts[10], Boolean.parseBoolean(parts[11])
+                                Integer.parseInt(parts[5]),LocalDate.parse(parts[6]),parts[9],parts[10], Boolean.parseBoolean(parts[11])
                         );
                         break;
 
@@ -118,7 +130,7 @@ public class DanhSachSanPham implements ChucNang,Doc_Ghi{
                         sp = new ThucPhamChucNang(
                                 parts[1], parts[2], parts[7], parts[8],
                                 Double.parseDouble(parts[4]), Double.parseDouble(parts[3]),
-                                Integer.parseInt(parts[5]), LocalDate.parse(parts[6], fmt),
+                                Integer.parseInt(parts[5]), LocalDate.parse(parts[6]),
                                 parts[9], parts[10], Integer.parseInt(parts[11])
                         );
                         break;
@@ -127,7 +139,7 @@ public class DanhSachSanPham implements ChucNang,Doc_Ghi{
                         sp = new MyPham(
                                 parts[1], parts[2], parts[7], parts[8],
                                 Double.parseDouble(parts[4]), Double.parseDouble(parts[3]),
-                                Integer.parseInt(parts[5]), LocalDate.parse(parts[6], fmt),
+                                Integer.parseInt(parts[5]), LocalDate.parse(parts[6]),
                                 parts[9], parts[10]
                         );
                         break;
@@ -136,14 +148,14 @@ public class DanhSachSanPham implements ChucNang,Doc_Ghi{
                         sp = new DungCuYTe(
                                 parts[1], parts[2], parts[7],  parts[8],
                                 Double.parseDouble(parts[4]), Double.parseDouble(parts[3]),
-                                Integer.parseInt(parts[5]), LocalDate.parse(parts[6], fmt),
+                                Integer.parseInt(parts[5]), LocalDate.parse(parts[6]),
                                 parts[9], parts[10]
                         );
                         break;
                 }
                 if (sp != null) danhSachSanPham.add(sp);
             }
-            System.out.println("Đọc file thành công (" + danhSachSanPham.size() + " sản phẩm)");
+            System.out.println("Doc file thanh cong (" + danhSachSanPham.size() + " san pham)");
         }catch (Exception e) {
             e.printStackTrace();
         }
@@ -156,305 +168,106 @@ public class DanhSachSanPham implements ChucNang,Doc_Ghi{
                 bw.write(sp.chuyenSangDinhDangTXT());
                 bw.newLine();
             }
-            System.out.println(" Ghi file thành công: " + fileName);
+            System.out.println(" Ghi file thanh cong: " + fileName);
         }  catch (Exception e){
             e.printStackTrace();
         }
     }
 
     @Override
-    public void them() {
-        Scanner sc = new Scanner(System.in);
-        System.out.print("Nhập loại: ");
-        String loai = sc.nextLine();
-        System.out.print("Nhập mã SP: ");
-        String ma = sc.nextLine().toUpperCase();
-        System.out.print("Nhập tên SP: ");
-        String ten = sc.nextLine();
-        System.out.print("Nhập hạn sử dụng (yyyy-MM-dd): ");
-        LocalDate hsd = LocalDate.parse(sc.nextLine());
-        System.out.print("Nhập loại sản phẩm: ");
-        String loaiSanPham = sc.nextLine();
-        System.out.print("Nhập mã nhà cung cấp: ");
-        String maNhaCungCap = sc.nextLine();
-        System.out.print("Nhập giá nhập: ");
-        sc.nextLine();
-        double giaNhap = Double.parseDouble(sc.nextLine());
-        System.out.print("Nhập giá bán: ");
-        double giaBan = Double.parseDouble(sc.nextLine());
-        System.out.print("Nhập số lượng: ");
-        int soLuong = Integer.parseInt(sc.nextLine());
-
-
-        SanPham sp = null;
-        switch (loai.trim().toLowerCase()) {
-            case "thuoc":
-                System.out.print("Nhập loại thuốc: ");
-                String loaiThuoc = sc.nextLine();
-                System.out.print("Nhập công dụng: ");
-                String congDung = sc.nextLine();
-                System.out.print("Kê toa (1-Có || 2-Không): ");
-                int ketoa = Integer.parseInt(sc.nextLine());;
-                if(ketoa != 1 && ketoa != 2){
-                    System.out.print("Kê toa chỉ nhận giá trị (1-Có || 2-Không) vui lòng nhập lại: ");
-                    ketoa = sc.nextInt();
-                }
-                sp = new Thuoc(ma, ten, loaiSanPham, maNhaCungCap, giaNhap, giaBan, soLuong, hsd, loaiThuoc, congDung , (ketoa==1)?true:false);
-                break;
-            case "mypham":
-                System.out.print("Nhập loại mỹ phẩm: ");
-                String loaiMyPham = sc.nextLine();
-                System.out.print("Nhập loại da phù hợp: ");
-                String loaiDaPhuHop = sc.nextLine();
-                sp = new MyPham(ma, ten, loaiSanPham, maNhaCungCap, giaNhap, giaBan, soLuong, hsd, loaiMyPham, loaiDaPhuHop);
-                break;
-            case "tpcn":
-                System.out.print("Nhập loại thực phẩm chức năng: ");
-                String loaiTPCN = sc.nextLine();
-                System.out.print("Bổ sung dưỡng chất: ");
-                String bsdc = sc.nextLine();
-                System.out.print("Độ tuổi sử dụng: ");
-                int tuoiSD = Integer.parseInt(sc.nextLine());;
-                if(tuoiSD<1){
-                    System.out.print("Tuổi lớn hơn 0 mời nhập lại: ");
-                    tuoiSD = Integer.parseInt(sc.nextLine());;
-                }
-                sp = new ThucPhamChucNang(ma, ten, loaiSanPham, maNhaCungCap, giaNhap, giaBan, soLuong, hsd, loaiTPCN, bsdc, tuoiSD);
-                break;
-            case "dcyt":
-                System.out.print("Nhập chất liệu: ");
-                String chatLieu = sc.nextLine();
-                System.out.print("Nhập xuất xứ: ");
-                String xuatXu = sc.nextLine();
-                sp = new DungCuYTe(ma, ten, loaiSanPham, maNhaCungCap, giaNhap, giaBan, soLuong, hsd, chatLieu, xuatXu);
-                break;
+    public boolean them(SanPham sp) {
+        if(sp == null){
+            return false;
         }
-        if (sp != null) {
-            danhSachSanPham.add(sp);
-            System.out.println("Thêm sản phẩm thành công!");
-        } else {
-            System.out.println("Loại sản phẩm không hợp lệ!");
+        danhSachSanPham.add(sp);
+        return true;
+    }
+    @Override
+    public boolean sua(String ma, SanPham spMoi) {
+        for (int i = 0; i < danhSachSanPham.size(); i++) {
+            SanPham sp = danhSachSanPham.get(i);
+            if (sp.getMaSanPham().equalsIgnoreCase(ma)) {
+                danhSachSanPham.set(i, spMoi);
+                return true;
+            }
         }
+        return false;
     }
 
     @Override
-    public void sua() {
-        Scanner sc = new Scanner(System.in);
-        System.out.print("Nhập mã/tên/loại sản phẩm cần sửa: ");
-        String tuKhoa = sc.nextLine();
-
-        SanPham finalSp = timKiemSanPham(tuKhoa);
-        if(finalSp == null){
-            System.out.println("Không tìm thấy sản phẩm với mã!");
-            return;
-        }
-        //Lambda Expression = "Hàm ẩn danh" (anonymous function)
-        //Biến được dùng trong lambda phải là final
-        System.out.println("\nSản phẩm tìm thấy:");
-        System.out.println(finalSp.layThongTinDayDu());
-
-        ArrayList<String> thuocTinhChung = new ArrayList<>();
-        thuocTinhChung.add("Tên sản phẩm");
-        thuocTinhChung.add("Giá bán");
-        thuocTinhChung.add("Số lượng tồn");
-        thuocTinhChung.add("Hạn sử dụng (yyyy-MM-dd)");
-        thuocTinhChung.add("Loại sản phẩm");
-        thuocTinhChung.add("Mã nhà cung cấp");
-        //Runnable là interface có 1 phương thức run(),
-        // không nhận tham số, không trả về
-        ArrayList<Runnable> phuongThucChung = new ArrayList<>();
-        phuongThucChung.add(() -> {
-            System.out.print("Nhập tên mới: ");
-            finalSp.setTenSanPham(sc.nextLine());
-        });
-        phuongThucChung.add(() -> {
-            System.out.print("Nhập giá bán mới: ");
-            finalSp.setGiaBan(Double.parseDouble(sc.nextLine()));
-        });
-        phuongThucChung.add(() -> {
-            System.out.print("Nhập số lượng mới: ");
-            finalSp.setSoLuongTon(Integer.parseInt(sc.nextLine()));
-        });
-        phuongThucChung.add(() -> {
-            System.out.print("Nhập hạn sử dụng mới (yyyy-MM-dd): ");
-            finalSp.setHSD(LocalDate.parse(sc.nextLine(), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-        });
-        phuongThucChung.add(() -> {
-            System.out.print("Nhập loại sản phẩm mới: ");
-            finalSp.setLoaiSanPham(sc.nextLine());
-        });
-        phuongThucChung.add(() -> {
-            System.out.print("Nhập mã nhà cung cấp mới: ");
-            finalSp.setMaNhaCungCap(sc.nextLine());
-        });
-
-        ArrayList<String> thuocTinhRieng  = new ArrayList<>();
-        ArrayList<Runnable> phuongThucRieng = new ArrayList<>();
-        if(finalSp instanceof Thuoc){
-            Thuoc thuoc = (Thuoc) finalSp;
-            thuocTinhRieng.add("Loại thuốc");
-            thuocTinhRieng.add("Công dụng");
-            thuocTinhRieng.add("Cần toa bác sĩ (true/false)");
-            phuongThucRieng.add(() -> {
-                System.out.print("Nhập loại thuốc mới: ");
-                thuoc.setLoaiThuoc(sc.nextLine());
-            });
-            phuongThucRieng.add(() -> {
-                System.out.print("Nhập công dụng mới: ");
-                thuoc.setCongDung(sc.nextLine());
-            });
-            phuongThucRieng.add(() -> {
-                System.out.print("Cần toa bác sĩ (true/false): ");
-                thuoc.setCanToaBacSi(Boolean.parseBoolean(sc.nextLine()));
-            });
-        } else if (finalSp instanceof MyPham) {
-            MyPham mypham = (MyPham) finalSp;
-            thuocTinhRieng.add("Loại mỹ phẩm");
-            thuocTinhRieng.add("Loại da phù hợp");
-            phuongThucRieng.add(() -> {
-                System.out.print("Nhập loại mỹ phẩm mới: ");
-                mypham.setLoaiMyPham(sc.nextLine());
-            });
-            phuongThucRieng.add(() -> {
-                System.out.print("Nhập loại da phù hợp mới: ");
-                mypham.setLoaiDaPhuHop(sc.nextLine());
-            });
-        } else if (finalSp instanceof ThucPhamChucNang) {
-            ThucPhamChucNang tpcn = (ThucPhamChucNang) finalSp;
-            thuocTinhRieng.add("Loại thực phẩm chức năng");
-            thuocTinhRieng.add("Bổ sung dưỡng chất");
-            thuocTinhRieng.add("Độ tuổi sử dụng");
-            phuongThucRieng.add(() -> {
-                System.out.print("Nhập loại TPCN mới: ");
-                tpcn.setLoaiThucPhamChucNang(sc.nextLine());
-            });
-            phuongThucRieng.add(() -> {
-                System.out.print("Nhập dưỡng chất bổ sung mới: ");
-                tpcn.setBoSungDuongChat(sc.nextLine());
-            });
-            phuongThucRieng.add(() -> {
-                System.out.print("Nhập độ tuổi sử dụng mới: ");
-                tpcn.setTuoiSuDung(Integer.parseInt(sc.nextLine()));
-            });
-        } else if (finalSp instanceof  DungCuYTe) {
-            DungCuYTe dcyt = (DungCuYTe) finalSp;
-            thuocTinhRieng.add("Chất liệu");
-            thuocTinhRieng.add("Xuất xứ");
-            phuongThucRieng.add(() -> {
-                System.out.print("Nhập chất liệu mới: ");
-                dcyt.setChatLieu(sc.nextLine());
-            });
-            phuongThucRieng.add(() -> {
-                System.out.print("Nhập xuất xứ mới: ");
-                dcyt.setXuatXu(sc.nextLine());
-            });
-        }
-        // Hiển thị menu
-        System.out.println("\nChọn thuộc tính muốn sửa (nhập số, cách nhau bằng dấu phẩy hoặc khoảng trắng):");
-        for (int i = 0; i < thuocTinhChung.size(); i++) {
-            System.out.println((i + 1) + ". " + thuocTinhChung.get(i));
-        }
-        int startRieng = thuocTinhChung.size() + 1;
-        if (!thuocTinhRieng.isEmpty()) {
-            for (int i = 0; i < thuocTinhRieng.size(); i++) {
-                System.out.println((startRieng + i) + ". " + thuocTinhRieng.get(i));
-            }
-        }
-        System.out.println("0. Thoát");
-        System.out.print("Nhập lựa chọn: ");
-        String input = sc.nextLine().trim();
-        if (input.equals("0")) return;
-        String[] choices = input.split("[,\\s]+");
-        //[ ... ]: Là một tập hợp các ký tự.
-        //,: Ký tự dấu phẩy.\\s: Bất kỳ ký tự khoảng trắng nào (dấu cách, tab...).
-        boolean daSua = false;
-
-        for(String choice : choices){
-            try{
-                int chon = Integer.parseInt(choice);
-                if (chon == 0) continue;
-                if(chon >= 1 && chon <= thuocTinhChung.size()){
-                    System.out.println("Sửa: " + thuocTinhChung.get(chon - 1));
-                    phuongThucChung.get(chon - 1).run();
-                    daSua = true;
-                } else if (chon >= startRieng && chon <= startRieng + thuocTinhRieng.size()){
-                   int idx = chon - startRieng;
-                    System.out.println("Sửa: " + thuocTinhRieng.get(idx));
-                    phuongThucRieng.get(idx).run();
-                    daSua = true;
-                } else {
-                    System.out.println("Lựa chọn không hợp lệ: " + chon);
-                }
-            } catch (Exception e) {
-                System.out.println("Lỗi nhập: " + choice);
-            }
-        }
-        if (daSua) {
-            System.out.println("Sửa sản phẩm thành công!");
-        } else {
-            System.out.println("Không có thay đổi nào được thực hiện.");
-        }
-    }
-
-    @Override
-    public void xoa() {
-        Scanner sc = new Scanner(System.in);
-        System.out.print("Nhập mã/tên sản phẩm cần xóa: ");
-        String tuKhoa = sc.nextLine();
-
-        SanPham sp = timKiemSanPham(tuKhoa);
+    public boolean xoa(String ma) {
+        SanPham sp = timKiemDoiTuong(ma);
         if (sp == null) {
-            System.out.println("Không tìm thấy sản phẩm!");
-            return;
+            System.out.println("Khong tim thay san pham!");
+            return false;
         }
-        System.out.println("Xác nhận xóa:");
-        System.out.println(sp.layThongTinDayDu());
-        System.out.print("Nhập 'YES' để xác nhận xóa: ");
-        String xacNhan = sc.nextLine().trim();
-
-        if (!xacNhan.equalsIgnoreCase("YES")) {
-            System.out.println("Đã hủy xóa.");
-            return;
-        }
-
-        boolean removed = danhSachSanPham.remove(sp);
-        if (removed) {
-            System.out.println("Xóa thành công!");
+        if (danhSachSanPham.remove(sp)) {
+            System.out.println("Xoa thanh cong!");
+            return true;
         } else {
-            System.out.println("Xóa thất bại!");
-        }
-    }
-
-    @Override
-    public void timKiem() {
-        Scanner sc = new Scanner(System.in);
-        System.out.print("Nhập từ khóa tìm kiếm (mã/tên/loại/NCC): ");
-        String tuKhoa = sc.nextLine();
-        SanPham sp = timKiemSanPham(tuKhoa);
-        if (sp != null) {
-            System.out.println("TÌM THẤY:");
-            System.out.println(sp.layThongTinDayDu());
-        } else {
-            System.out.println("Không tìm thấy sản phẩm nào!");
+            System.out.println("Xoa that bai!");
+            return false;
         }
     }
 
     @Override
     public void inDanhSach() {
         if (danhSachSanPham.isEmpty()) {
-            System.out.println("Danh sách rỗng!");
+            System.out.println("Danh sach san pham hien dang rong!");
             return;
         }
-        System.out.println("\n=== DANH SÁCH SẢN PHẨM ===");
+
+        System.out.println("\n===============================================================================================================================================================================");
+        System.out.println("|                                                      DANH SACH SAN PHAM                                                                                                       |");
+        System.out.println("=================================================================================================================================================================================");
+        System.out.printf("| %-5s | %-10s | %-30s | %-15s | %-10s | %-10s | %-8s | %-12s | %-40s |%n",
+                "STT", "MA SP", "TEN SAN PHAM", "LOAI SP CHUNG", "GIA BAN", "SL TON", "MA NCC", "HSD", "THONG TIN RIENG/CHI TIET");
+        System.out.println("=================================================================================================================================================================================");
+
+        int stt = 1;
         for (SanPham sp : danhSachSanPham) {
-            System.out.println(sp.layThongTinDayDu());
+            String loaiChung = "";
+            String chiTietRieng = "";
+
+            if (sp instanceof Thuoc) {
+                Thuoc t = (Thuoc) sp;
+                loaiChung = "Thuoc";
+                chiTietRieng = String.format("Loai: %s | Cong Dung: %s | Toa BS: %s",
+                        t.getLoaiThuoc(), t.getCongDung(), (t.getCanToaBacSi() ? "CO" : "KHONG"));
+            } else if (sp instanceof ThucPhamChucNang) {
+                ThucPhamChucNang tpcn = (ThucPhamChucNang) sp;
+                loaiChung = "TPCN";
+                chiTietRieng = String.format("Loai: %s | DC: %s | Tuoi SD: %d+",
+                        tpcn.getLoaiThucPhamChucNang(), tpcn.getBoSungDuongChat(), tpcn.getTuoiSuDung());
+            } else if (sp instanceof MyPham) {
+                MyPham mp = (MyPham) sp;
+                loaiChung = "My Pham";
+                chiTietRieng = String.format("Loai: %s | Cho Da: %s",
+                        mp.getLoaiMyPham(), mp.getLoaiDaPhuHop());
+            } else if (sp instanceof DungCuYTe) {
+                DungCuYTe dc = (DungCuYTe) sp;
+                loaiChung = "DC Y Te";
+                chiTietRieng = String.format("Chat Lieu: %s | Xuat Xu: %s",
+                        dc.getChatLieu(), dc.getXuatXu());
+            }
+
+            System.out.printf("| %-5d | %-10s | %-30s | %-15s | %-10.0f | %-8d | %-8s | %-12s | %-40s |%n",
+                    stt++,
+                    sp.getMaSanPham(),
+                    sp.getTenSanPham(),
+                    loaiChung,
+                    sp.getGiaBan(),
+                    sp.getSoLuongTon(),
+                    sp.getMaNhaCungCap(),
+                    sp.getHSD().toString(),
+                    chiTietRieng
+            );
         }
+        System.out.println("=================================================================================================================================================================================");
+        System.out.println("Tong so san pham: " + danhSachSanPham.size());
     }
 
-//    public  ArrayList<SanPham> locTheoLoaiSanPham(String loai){
-//        ArrayList<SanPham> ketQua = new ArrayList<>();
-//        if(loai.trim().toLowerCase().)
-//    }
+
     public ArrayList<SanPham> locTheoMaNhaCungCap(String maNCC){
         return timKiemDanhSach(maNCC);
     }
@@ -472,7 +285,132 @@ public class DanhSachSanPham implements ChucNang,Doc_Ghi{
         }
         return ketQua;
     }
+    public ArrayList<SanPham> locSanPhamConHan() {
+        ArrayList<SanPham> ketQua = new ArrayList<>();
+        LocalDate ngayHienTai = LocalDate.now();
+        for (SanPham sp : danhSachSanPham) {
+            if (sp.getHSD().isAfter(ngayHienTai)) {
+                ketQua.add(sp);
+            }
+        }
+        return ketQua;
+    }
+    public void sapXepTheoGiaBanTangDan() {
+        int n = danhSachSanPham.size();
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - i - 1; j++) {
+                if (danhSachSanPham.get(j).getGiaBan() > danhSachSanPham.get(j + 1).getGiaBan()) {
+                    SanPham temp = danhSachSanPham.get(j);
+                    danhSachSanPham.set(j, danhSachSanPham.get(j + 1));
+                    danhSachSanPham.set(j + 1, temp);
+                }
+            }
+        }
+        System.out.println(">>> Danh sach san pham da duoc sap xep theo Gia ban (Tang dan) (Bubble Sort).");
+    }
+    public void sapXepTheoSLTonGiamDan() {
+        int n = danhSachSanPham.size();
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - i - 1; j++) {
+                if (danhSachSanPham.get(j).getSoLuongTon() < danhSachSanPham.get(j + 1).getSoLuongTon()) {
+                    SanPham temp = danhSachSanPham.get(j);
+                    danhSachSanPham.set(j, danhSachSanPham.get(j + 1));
+                    danhSachSanPham.set(j + 1, temp);
+                }
+            }
+        }
+        System.out.println(">>> Danh sach san pham da duoc sap xep theo So luong ton (Giam dan) (Bubble Sort).");
+    }
+    public SanPham timSanPhamGiaCaoNhat() {
+        if (danhSachSanPham.isEmpty()) {
+            return null;
+        }
+        SanPham sanPhamMax = danhSachSanPham.get(0);
+        double giaMax = sanPhamMax.getGiaBan();
+        for (int i = 1; i < danhSachSanPham.size(); i++) {
+            SanPham currentSP = danhSachSanPham.get(i);
+            if (currentSP.getGiaBan() > giaMax) {
+                giaMax = currentSP.getGiaBan();
+                sanPhamMax = currentSP;
+            }
+        }
+        return sanPhamMax;
+    }
+    private void hienThiKetQuaLoc(String tieuDe, List<SanPham> danhSach) {
+        if (danhSach.isEmpty()) {
+            System.out.println(">>> Khong tim thay " + tieuDe);
+        } else {
+            System.out.println("\n>>> Ket qua " + tieuDe + " (" + danhSach.size() + " san pham):");
+            DanhSachSanPham dsTam = new DanhSachSanPham();
+            dsTam.danhSachSanPham.addAll(danhSach);
+            dsTam.inDanhSach();
+        }
+    }
 
+    public void menuTienIchSanPham() {
+        Scanner sc = new Scanner(System.in);
+        int chonTienIch;
+        do {
+            System.out.println("\n========== MENU TIEN ICH SAN PHAM ==========");
+            System.out.println("1. Loc san pham theo Ma Nha Cung Cap");
+            System.out.println("2. Loc san pham theo Khoang Gia Ban");
+            System.out.println("3. Sap xep theo Gia ban (Tang dan) va in danh sach");
+            System.out.println("4. Sap xep theo So luong ton (Giam dan) va in danh sach");
+            System.out.println("5. Loc san pham CON HAN su dung");
+            System.out.println("6. Tim san pham co Gia ban CAO NHAT");
+            System.out.println("0. Quay lai");
+            System.out.print("Chon chuc nang: ");
 
+            try {
+                chonTienIch = Integer.parseInt(sc.nextLine());
+
+                switch (chonTienIch) {
+                    case 1: {
+                        System.out.print("Nhap Ma Nha Cung Cap can loc: ");
+                        String maNCC = sc.nextLine();
+                        hienThiKetQuaLoc("san pham tu NCC " + maNCC, locTheoMaNhaCungCap(maNCC));
+                        break;
+                    }
+                    case 2: {
+                        System.out.print("Nhap Gia ban Thap nhat: ");
+                        double min = Double.parseDouble(sc.nextLine());
+                        System.out.print("Nhap Gia ban Cao nhat: ");
+                        double max = Double.parseDouble(sc.nextLine());
+                        hienThiKetQuaLoc("san pham co gia tu " + min + " den " + max, locTheoKhoangGiaBan(min, max));
+                        break;
+                    }
+                    case 3:
+                        sapXepTheoGiaBanTangDan();
+                        inDanhSach();
+                        break;
+                    case 4:
+                        sapXepTheoSLTonGiamDan();
+                        inDanhSach();
+                        break;
+                    case 5:
+                        hienThiKetQuaLoc("san pham con han su dung", locSanPhamConHan());
+                        break;
+                    case 6: {
+                        SanPham spMax = timSanPhamGiaCaoNhat();
+                        if (spMax != null) {
+                            System.out.println("\n>>> San pham co Gia ban CAO NHAT:");
+                            System.out.println(spMax.layThongTinDayDu());
+                        } else {
+                            System.out.println("Danh sach san pham rong.");
+                        }
+                        break;
+                    }
+                    case 0:
+                        System.out.println("Quay lai menu truoc...");
+                        break;
+                    default:
+                        System.out.println("Lua chonTienIch khong hop le! Vui long nhap lai.");
+                }
+            } catch (NumberFormatException e) {
+                System.err.println("Loi nhap lieu: Vui long nhap mot so.");
+                chonTienIch = -1;
+            }
+        } while (chonTienIch != 0);
+    }
 
 }

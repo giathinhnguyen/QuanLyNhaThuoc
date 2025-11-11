@@ -1,6 +1,6 @@
 import java.time.LocalDate;
 
-public class DungCuYTe extends SanPham implements LayThongTin{
+public class DungCuYTe extends SanPham{
     public String chatLieu, xuatXu;
 
     public String getChatLieu() {
@@ -25,38 +25,32 @@ public class DungCuYTe extends SanPham implements LayThongTin{
     }
     @Override
     public String layThongTinDayDu(){
-        return "Dụng cụ y tế {" +
-                "Mã sản phẩm: '" + maSanPham + '\'' +
-                ", Tên: '" + tenSanPham + '\'' +
-                ", Loại sản phẩm: '" + loaiSanPham + '\'' +
-                ", Mã nhà cung cấp: '" + maNhaCungCap + '\'' +
-                ", Giá nhập: " + giaNhap +
-                ", Giá bán: " + giaBan +
-                ", Số lượng tồn: " + soLuongTon +
-                ", Hạn sử dụng: '" + HSD + '\'' +
-                ", Chất liệu: '" + chatLieu + '\'' +
-                ", Xuất xứ: '" + xuatXu + '\'' +
-                '}';
+        return String.format(
+                "| %-10s | %-30s | Gia Ban: %,.0f | Ton: %-5d | HSD: %-10s | Chat Lieu: %s | Xuat Xu: %s",
+                maSanPham,
+                tenSanPham,
+                giaBan,
+                soLuongTon,
+                HSD.toString(),
+                chatLieu,
+                xuatXu
+        );
     }
     @Override
     public String chuyenSangDinhDangTXT(){
         return String.join(";",
                 "DungCuYTe",
-                maSanPham, tenSanPham,
+                maSanPham,
+                tenSanPham,
                 String.valueOf(giaBan),
                 String.valueOf(giaNhap),
                 String.valueOf(soLuongTon),
                 HSD.toString(),
-                loaiSanPham, maNhaCungCap,
-                chatLieu, xuatXu
+                loaiSanPham,
+                maNhaCungCap,
+                chatLieu,
+                xuatXu
         );
     }
 
-    @Override
-    public boolean kiemTraHopLe() {
-        if (!super.kiemTraHopLe()) return false;
-        if (chatLieu == null || chatLieu.trim().isEmpty()) return false;
-        if (xuatXu == null || xuatXu.trim().isEmpty()) return false;
-        return true;
-    }
 }
