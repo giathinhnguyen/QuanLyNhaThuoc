@@ -1,22 +1,24 @@
-DungCuYTe;DC004;Khau trang 4 lop sieu sang;2000.0;1000.0;1000;2028-01-01;Bao ho;NCC005;Vai khang khuan;Viet Nam
-Thuoc;T005;Loratadin 10mg;3000.0;1800.0;150;2027-05-10;Vien nen;NCC004;Giam di ung, man ngua;false
+Thuoc;T001;Paracetamol 500mg;2500.0;1500.0;120;2026-03-01;Thuoc vien;NCC003;Ha sot, giam dau;false
 Thuoc;T002;Amoxicillin 500mg;3500.0;2000.0;80;2026-08-15;Thuoc vien;NCC001;Dieu tri nhiem khuan;true
-Thuoc;T006;Ibuprofen 400mg;3500.0;2200.0;180;2027-08-01;Vien nen;NCC003;Giam dau, ha sot;false
-Thuoc;T004;Omeprazol 20mg;4200.0;2500.0;100;2026-12-31;Vien nang;NCC002;Giam acid da day;true
 Thuoc;T003;Vitamin C 1000mg;5000.0;3000.0;200;2027-02-01;Vien sui;NCC005;Tang de khang;false
-DungCuYTe;DC003;Bong Gac Tiet Trung;15000.0;8000.0;500;2027-07-01;Vat tu y te;NCC001;Bong y te;Viet Nam
-MyPham;MP001;Kem Duong Am Nivea;120000.0;90000.0;200;2027-01-10;Kem duong;NCC005;Kem;Moi loai da
-ThucPhamChucNang;TP004;Probiotic Kids;150000.0;110000.0;70;2026-03-01;Ho tro tieu hoa;NCC004;Men vi sinh;Lactobacillus;3
-MyPham;MP005;Toner Simple;150000.0;100000.0;120;2026-12-31;Nuoc hoa hong;NCC003;Nuoc;Moi loai da
-DungCuYTe;DC001;Nhiet ke dien tu Omron;150000.0;100000.0;60;2030-01-01;Dung cu do;NCC002;Nhua ABS;Nhat Ban
+Thuoc;T004;Omeprazol 20mg;4200.0;2500.0;100;2026-12-31;Vien nang;NCC002;Giam acid da day;true
+Thuoc;T005;Loratadin 10mg;3000.0;1800.0;150;2027-05-10;Vien nen;NCC004;Giam di ung, man ngua;false
+Thuoc;T006;Ibuprofen 400mg;3500.0;2200.0;180;2027-08-01;Vien nen;NCC003;Giam dau, ha sot;false
 ThucPhamChucNang;TP001;Collagen Dang Nuoc;250000.0;180000.0;40;2026-09-01;Bo sung collagen;NCC001;Dep da;Collagen peptide;18
-MyPham;MP002;Sua Rua Mat Cerave;250000.0;180000.0;150;2026-08-20;Sua rua mat;NCC002;Dang gel;Da nhay cam
-ThucPhamChucNang;TP005;Canxi Nano Plus D3;280000.0;220000.0;85;2026-10-01;Bo sung canxi;NCC003;Ho tro xuong;Canxi + Vitamin D3;10
-MyPham;MP006;Kem Duong Trang Olay;280000.0;200000.0;90;2027-04-01;Kem duong trang;NCC005;Kem;Da thuong
-ThucPhamChucNang;TP006;Ginkgo Biloba Extract;300000.0;230000.0;75;2026-09-10;Tang tri nho;NCC001;Thao duoc;Ginkgo biloba;18
 ThucPhamChucNang;TP002;Omega 3 Fish Oil;320000.0;250000.0;60;2026-06-01;Bo nao;NCC005;Bo sung dau ca;Omega-3;12
-MyPham;MP004;Serum Vitamin C;320000.0;250000.0;80;2027-02-01;Serum duong da;NCC001;Serum;Da kho
-DungCuYTe;DC006;May Do Nhiet Do Hong Ngoai;350000.0;250000.0;55;2030-06-01;Thiet bi dien tu;NCC002;Nhua ABS;Trung Quoc
 ThucPhamChucNang;TP003;Vitamin Tong Hop Centrum;480000.0;350000.0;90;2027-01-01;Bo sung vitamin;NCC002;Bo sung khoang chat;Vitamin A,B,C,E;18
+ThucPhamChucNang;TP004;Probiotic Kids;150000.0;110000.0;70;2026-03-01;Ho tro tieu hoa;NCC004;Men vi sinh;Lactobacillus;3
+ThucPhamChucNang;TP005;Canxi Nano Plus D3;280000.0;220000.0;85;2026-10-01;Bo sung canxi;NCC003;Ho tro xuong;Canxi + Vitamin D3;10
+ThucPhamChucNang;TP006;Ginkgo Biloba Extract;300000.0;230000.0;75;2026-09-10;Tang tri nho;NCC001;Thao duoc;Ginkgo biloba;18
+MyPham;MP001;Kem Duong Am Nivea;120000.0;90000.0;200;2027-01-10;Kem duong;NCC005;Kem;Moi loai da
+MyPham;MP002;Sua Rua Mat Cerave;250000.0;180000.0;150;2026-08-20;Sua rua mat;NCC002;Dang gel;Da nhay cam
 MyPham;MP003;Kem Chong Nang Anessa;480000.0;360000.0;100;2026-05-01;Kem chong nang;NCC004;Kem;Da dau
+MyPham;MP004;Serum Vitamin C;320000.0;250000.0;80;2027-02-01;Serum duong da;NCC001;Serum;Da kho
+MyPham;MP005;Toner Simple;150000.0;100000.0;120;2026-12-31;Nuoc hoa hong;NCC003;Nuoc;Moi loai da
+MyPham;MP006;Kem Duong Trang Olay;280000.0;200000.0;90;2027-04-01;Kem duong trang;NCC005;Kem;Da thuong
+DungCuYTe;DC001;Nhiet ke dien tu Omron;150000.0;100000.0;60;2030-01-01;Dung cu do;NCC002;Nhua ABS;Nhat Ban
 DungCuYTe;DC002;May Do Huyet Ap Microlife;750000.0;550000.0;40;2030-01-01;Thiet bi dien tu;NCC004;Nhua cao cap;Thuy Si
+DungCuYTe;DC003;Bong Gac Tiet Trung;15000.0;8000.0;500;2027-07-01;Vat tu y te;NCC001;Bong y te;Viet Nam
+DungCuYTe;DC004;Khau Trang 4 Lop;2000.0;1000.0;1000;2028-01-01;Bao ho;NCC005;Vai khang khuan;Viet Nam
+DungCuYTe;DC005;Bang Gac Y Te Urgo;25000.0;15000.0;300;2027-06-01;Bang bo vet thuong;NCC003;Vai khong det;Phap
+DungCuYTe;DC006;May Do Nhiet Do Hong Ngoai;350000.0;250000.0;55;2030-06-01;Thiet bi dien tu;NCC002;Nhua ABS;Trung Quoc

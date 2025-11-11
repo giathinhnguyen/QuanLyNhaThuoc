@@ -1,11 +1,18 @@
 import java.util.Scanner;
-
+    
 public class A_MenuTong {
     private Scanner sc = new Scanner(System.in);
     BaoCao baoCao;
     HeThongQuanLy heThongQuanLy;
     public  A_MenuTong() {
         heThongQuanLy = new HeThongQuanLy();
+        heThongQuanLy.dsSP.docFile("DanhSachSanPham.txt");
+        heThongQuanLy.dsNV.docFile("DanhSachNhanVien.txt");
+        heThongQuanLy.dsNCC.docFile("DanhSachNhaCungCap.txt");
+        heThongQuanLy.dsKM.docFile("DanhSachKhuyenMai.txt");
+        heThongQuanLy.dsKH.docFile("DanhSachKhachHang.txt");
+        heThongQuanLy.dsHDB.docFile("DanhSachHoaDonBan.txt");
+        heThongQuanLy.dsHDN.docFile("DanhSachHoaDonNhap.txt");
         baoCao = new BaoCao(heThongQuanLy.dsSP, heThongQuanLy.dsHDB, heThongQuanLy.dsHDN);
     }
 

@@ -129,17 +129,38 @@ public class DanhSachNhaCungCap implements ChucNang<NhaCungCap>, Doc_Ghi {
             dsNhaCungCap.clear();
             String line;
             while ((line = br.readLine()) != null) {
-                String[] data = line.split(";");
+                String[] parts = line.split(";", -1);
+                if (parts.length < 8) {
+                    System.err.println("Loi dinh dang: Dong khong du 8 truong. Bo qua: " + line);
+                    continue;
+                }
+                String maNCC = parts[0];
+                String tenNCC = parts[1];
+                String SDT = parts[2];
 
-                DiaChi diaChi = new DiaChi(data[3], data[4], data[5], data[6]);
-                dsNhaCungCap.add(new NhaCungCap(data[0], data[1], diaChi, data[2]));
+                DiaChi diaChi = new DiaChi(parts[6], parts[5], parts[4], parts[3]);
+                ArrayList<String> dsMaSP = new ArrayList<>();
+                String dsMaSPString = parts[7];
+
+                if (!dsMaSPString.isEmpty()) {
+                    String[] maSPs = dsMaSPString.split(",");
+                    for (String ma : maSPs) {
+                        dsMaSP.add(ma.trim());
+                    }
+                }
+                NhaCungCap ncc = new NhaCungCap(maNCC, tenNCC, diaChi, SDT);
+                ncc.setDsSanPhamCungCap(dsMaSP);
+
+                dsNhaCungCap.add(ncc);
             }
-            System.out.println("Doc file thanh cong!");
+            System.out.println("Da doc danh sach nha cung cap tu file " + fileName + ". Tong so NCC: " + dsNhaCungCap.size());
+        } catch (IOException e) {
+            System.out.println("Loi khi doc file: " + e.getMessage());
         } catch (Exception e) {
-            System.out.println("Loi doc file!");
-            e.printStackTrace();
+            System.out.println("Loi dinh dang du lieu trong file hoac khoi tao doi tuong: " + e.getMessage());
         }
     }
+
 
     // ================= HAM TIEN ICH BO SUNG =================
     private void hienThiKetQuaLoc(String tieuDe, List<NhaCungCap> danhSach) {

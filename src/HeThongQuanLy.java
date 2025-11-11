@@ -1132,11 +1132,9 @@ public class HeThongQuanLy {
         while (true) {
             System.out.print("Nhap ma nhan vien ban thuoc: ");
             maNV = sc.nextLine().trim().toUpperCase();
-            NhanVien nv = dsNV.timKiemDoiTuong(maNV);
-            if (nv != null && nv instanceof NhanVienBanThuoc) break;
+            if (!dsNV.tonTaiDoiTuong(maNV)) break;
             System.out.println("Ma nhan vien khong hop le hoac khong phai NV ban thuoc!");
         }
-
         // Ma khach hang
         System.out.print("Nhap ma khach hang: ");
         String maKH = sc.nextLine().trim().toUpperCase();
@@ -1237,12 +1235,12 @@ public class HeThongQuanLy {
             while (true) {
                 System.out.print("Nhap ma nhan vien moi: ");
                 String ma = sc.nextLine().trim().toUpperCase();
-                NhanVien nv = dsNV.timKiemDoiTuong(ma);
-                if (nv != null && nv instanceof NhanVienBanThuoc) {
-                    finalHDB.setMaNhanVienLap(ma);
-                    break;
+                if (!dsNV.tonTaiDoiTuong(ma)) {
+                    System.out.print("Ma nhan vien khong ton tai! Vui long nhap lai: ");
+                    ma = sc.nextLine().trim().toUpperCase();
                 }
-                System.out.println("Khong hop le!");
+                finalHDB.setMaNhanVienLap(ma);
+
             }
         });
 
