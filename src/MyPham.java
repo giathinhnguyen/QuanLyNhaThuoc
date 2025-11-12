@@ -47,7 +47,6 @@ public class MyPham extends  SanPham{
                 String.valueOf(giaNhap),
                 String.valueOf(soLuongTon),
                 HSD.toString(),
-                loaiSanPham,
                 maNhaCungCap,
                 loaiMyPham,
                 loaiDaPhuHop

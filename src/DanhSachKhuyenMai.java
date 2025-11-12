@@ -5,12 +5,19 @@ import java.util.*;
 
 public class DanhSachKhuyenMai implements ChucNang<KhuyenMai>, Doc_Ghi {
 
-    private ArrayList<KhuyenMai> dsKhuyenMai =new ArrayList<>();
+    private ArrayList<KhuyenMai> dsKhuyenMai = new ArrayList<>();
 
     public DanhSachKhuyenMai() {
         dsKhuyenMai = new ArrayList<>();
     }
 
+    public ArrayList<KhuyenMai> getDsKhuyenMai() {
+        return dsKhuyenMai;
+    }
+
+    public void setDsKhuyenMai(ArrayList<KhuyenMai> dsKhuyenMai) {
+        this.dsKhuyenMai = dsKhuyenMai;
+    }
     // ================= CHUC NANG CO BAN =================
 
     // tim theo ma, % giam, ngay bat dau, ngay ket thuc
@@ -99,13 +106,7 @@ public class DanhSachKhuyenMai implements ChucNang<KhuyenMai>, Doc_Ghi {
     public void ghiFile(String fileName) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(fileName))) {
             for (KhuyenMai km : dsKhuyenMai) {
-                bw.write(String.join(";",
-                        km.getMaKhuyenMai(),
-                        km.getTenKhuyenMai().replace(";", " "),
-                        km.getNgayBatDau().toString(),
-                        km.getNgayKetThuc().toString(),
-                        String.valueOf(km.getPhanTramGiam()),
-                        String.valueOf(km.getDieuKienApDung())));
+                bw.write(km.chuyenSangDinhDangTXT());
                 bw.newLine();
             }
             System.out.println("Ghi file thanh cong: " + fileName);
@@ -123,7 +124,7 @@ public class DanhSachKhuyenMai implements ChucNang<KhuyenMai>, Doc_Ghi {
             while ((line = br.readLine()) != null) {
                 lineNo++;
                 if (line.trim().isEmpty()) continue;
-                String[] p = line.split(";");
+                String[] p = line.split(";",-1);
                 if (p.length != 6) {
                     System.err.println("Dong " + lineNo + " khong hop le: " + line);
                     continue;

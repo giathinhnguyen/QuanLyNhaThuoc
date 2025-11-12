@@ -52,7 +52,7 @@ public class Thuoc extends SanPham{
     public String chuyenSangDinhDangTXT() {
         return String.join(";",
                 "Thuoc", maSanPham, tenSanPham, String.valueOf(giaBan), String.valueOf(giaNhap), String.valueOf(soLuongTon),
-                HSD.toString(), loaiThuoc, maNhaCungCap, congDung,
+                HSD.toString(), maNhaCungCap, loaiThuoc,  congDung,
                 (canToaBacSi ? "true" : "false")
         );
     }

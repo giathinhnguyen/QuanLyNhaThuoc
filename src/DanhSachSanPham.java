@@ -115,41 +115,41 @@ public class DanhSachSanPham implements ChucNang<SanPham>,Doc_Ghi{
                 if (line.isEmpty() || line.startsWith("#")) continue;
 
                 String[] parts = line.split(";", -1);
-                String loai = parts[0];
+                String loai = parts[0].trim().toLowerCase();
 
                 SanPham sp = null;
                 switch (loai) {
-                    case "Thuoc":
+                    case "thuoc":
                         sp = new Thuoc(
-                                parts[1],parts[2],parts[7],parts[8],Double.parseDouble(parts[4]), Double.parseDouble(parts[3]),
-                                Integer.parseInt(parts[5]),LocalDate.parse(parts[6]),parts[9],parts[10], Boolean.parseBoolean(parts[11])
+                                parts[1],parts[2],parts[0],parts[7],Double.parseDouble(parts[4]), Double.parseDouble(parts[3]),
+                                Integer.parseInt(parts[5]),LocalDate.parse(parts[6]),parts[8],parts[9], Boolean.parseBoolean(parts[10])
                         );
                         break;
 
-                    case "ThucPhamChucNang":
+                    case "thucphamchucnang":
                         sp = new ThucPhamChucNang(
-                                parts[1], parts[2], parts[7], parts[8],
+                                parts[1], parts[2], parts[0], parts[7],
                                 Double.parseDouble(parts[4]), Double.parseDouble(parts[3]),
                                 Integer.parseInt(parts[5]), LocalDate.parse(parts[6]),
-                                parts[9], parts[10], Integer.parseInt(parts[11])
+                                parts[8], parts[9], Integer.parseInt(parts[10])
                         );
                         break;
 
-                    case "MyPham":
+                    case "mypham":
                         sp = new MyPham(
-                                parts[1], parts[2], parts[7], parts[8],
+                                parts[1], parts[2], parts[0], parts[7],
                                 Double.parseDouble(parts[4]), Double.parseDouble(parts[3]),
                                 Integer.parseInt(parts[5]), LocalDate.parse(parts[6]),
-                                parts[9], parts[10]
+                                parts[8], parts[9]
                         );
                         break;
 
-                    case "DungCuYTe":
+                    case "dungcuyte":
                         sp = new DungCuYTe(
-                                parts[1], parts[2], parts[7],  parts[8],
+                                parts[1], parts[2], parts[0],  parts[7],
                                 Double.parseDouble(parts[4]), Double.parseDouble(parts[3]),
                                 Integer.parseInt(parts[5]), LocalDate.parse(parts[6]),
-                                parts[9], parts[10]
+                                parts[8], parts[9]
                         );
                         break;
                 }

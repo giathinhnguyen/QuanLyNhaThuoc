@@ -78,12 +78,7 @@ public class HoaDonBanHang extends HoaDon implements LayThongTin{
        );
    }
 
-   //ghi de de tranh loi
-    @Override
-    public double tinhTongTien(DanhSachSanPham dsSanPham) {
-        return this.tongTien;
-    }
-    public double tinhTongTien(DanhSachSanPham dsSanPham, DanhSachKhuyenMai dsKhuyenMai) {
+    public double tinhTongTienSauGiamGia(DanhSachSanPham dsSanPham, DanhSachKhuyenMai dsKhuyenMai) {
         double tongTienGoc = 0;
         for (Map.Entry<String, Integer> entry : chiTietHoaDon.entrySet()) {
             String maSP = entry.getKey();

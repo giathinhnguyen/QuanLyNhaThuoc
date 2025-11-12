@@ -57,7 +57,6 @@ public class ThucPhamChucNang extends SanPham{
                 String.valueOf(giaNhap),
                 String.valueOf(soLuongTon),
                 HSD.toString(),
-                loaiSanPham,
                 maNhaCungCap,
                 loaiThucPhamChucNang,
                 boSungDuongChat,

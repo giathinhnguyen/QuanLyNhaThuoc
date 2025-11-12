@@ -72,15 +72,4 @@ public abstract class SanPham implements LayThongTin{
         return this.giaBan-this.giaNhap;
     }
 
-    public boolean kiemTraHopLe(){
-        if (maSanPham == null || maSanPham.trim().isEmpty()) return false;
-        if (tenSanPham == null || tenSanPham.trim().isEmpty()) return false;
-        if (loaiSanPham == null || loaiSanPham.trim().isEmpty()) return false;
-        if (maNhaCungCap == null || maNhaCungCap.trim().isEmpty()) return false;
-        if (giaNhap <= 0 || giaBan <= 0) return false;
-        if (soLuongTon < 0) return false;
-        if (giaBan < giaNhap) return false;
-
-        return true; // Hợp lệ
-    }
 }

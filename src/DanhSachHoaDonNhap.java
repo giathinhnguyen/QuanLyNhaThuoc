@@ -177,33 +177,14 @@ public class DanhSachHoaDonNhap implements ChucNang<HoaDonNhap>, Doc_Ghi {
     public void ghiFile(String fileName) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter("HoaDonNhap.txt"))) {
             for (HoaDonNhap hdn : dsHoaDonNhap) {
-
-                StringBuilder chiTietStr = new StringBuilder();
-                boolean first = true;
-                for (Map.Entry<String, Integer> entry : hdn.getChiTietHoaDon().entrySet()) {
-                    if (!first) { chiTietStr.append(","); }
-                    chiTietStr.append(entry.getKey()).append("-").append(entry.getValue());
-                    first = false;
-                }
-                String line = String.join(";",
-                        hdn.getMaHoaDon(),
-                        hdn.getNgayLap().toString(),
-                        hdn.getMaQuanLy(),
-                        hdn.getMaNhaCungCap(),
-                        String.valueOf(hdn.getTongTien()),
-                        chiTietStr.toString()
-                );
-                bw.write(line);
+                bw.write(hdn.chuyenSangDinhDangTXT());
                 bw.newLine();
             }
             System.out.println("Ghi file thanh cong!");
         } catch (IOException e) {
-            System.out.println("Loi khi doc file: " + e.getMessage());
-        } catch (NumberFormatException e) {
-            System.out.println("Loi dinh dang du lieu trong file: " + e.getMessage());
+            System.out.println("Loi khi ghi file: " + e.getMessage());
         }
     }
-
 
     //==================== HAM TIEN ICH BO SUNG ====================
 

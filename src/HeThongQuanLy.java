@@ -1,5 +1,4 @@
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.*;
 
@@ -21,12 +20,35 @@ public class HeThongQuanLy {
         dsHDB = new DanhSachHoaDonBan();
         dsHDN = new DanhSachHoaDonNhap();
     }
+    public static LocalDate nhapNgayHopLe(String thongBao) {
+        LocalDate date = null;
+        boolean nhapThanhCong = false;
+        Scanner sc =new Scanner(System.in);
+        do {
+            System.out.print(thongBao + " (yyyy-MM-dd): ");
+            String input = sc.nextLine().trim();
+            try {
+                date = LocalDate.parse(input);
+                nhapThanhCong = true;
+            } catch (DateTimeParseException e) {
+                System.err.println("lOI NHAP NGAY: Dinh dang ngay khong hop le hoac ngay khong ton tai. Vui long nhap lai theo format YYYY-MM-DD.");
+            }
+        } while (!nhapThanhCong);
+        return date;
+    }
 
     // ================= DANH SACH SAN PHAM =================
     public void themSanPhamTuBanPhim(){
         Scanner sc = new Scanner(System.in);
-        System.out.print("Nhap loai: ");
-        String loai = sc.nextLine();
+        System.out.print("Nhap loai san pham (Thuoc/ThucPhamChucNang/MyPham/DungCuYTe): ");
+        String loaiSanPham = sc.nextLine().trim();
+        while (!loaiSanPham.trim().equalsIgnoreCase("thuoc") &&
+                !loaiSanPham.trim().equalsIgnoreCase("thucphamchucnang") &&
+               !loaiSanPham.trim().equalsIgnoreCase("mypham") &&
+                !loaiSanPham.trim().equalsIgnoreCase("dungcuyte")){
+            System.out.print("Loai san pham phai chi duoc la 4 loai san pham tren! Vui long nhap lai: ");
+            loaiSanPham = sc.nextLine().trim();
+        }
         System.out.print("Nhap ma SP: ");
         String ma = sc.nextLine().trim().toUpperCase();
         while (dsSP.tonTaiDoiTuong(ma)) {
@@ -35,10 +57,7 @@ public class HeThongQuanLy {
         }
         System.out.print("Nhap ten SP: ");
         String ten = sc.nextLine();
-        System.out.print("Nhap han su dung (yyyy-MM-dd): ");
-        LocalDate hsd = LocalDate.parse(sc.nextLine());
-        System.out.print("Nhap loai san pham: ");
-        String loaiSanPham = sc.nextLine();
+        LocalDate hsd = nhapNgayHopLe("Nhap han su dung");
         System.out.print("Nhap ma nha cung cap: ");
         String maNCC = sc.nextLine().trim().toUpperCase();
         while (!dsNCC.tonTaiDoiTuong(maNCC)){
@@ -61,9 +80,9 @@ public class HeThongQuanLy {
 
 
         SanPham sp = null;
-        switch (loai.trim().toLowerCase()) {
+        switch (loaiSanPham.trim().toLowerCase()) {
             case "thuoc":
-                System.out.print("Nhap loai thuoc: ");
+                System.out.print("Nhap loaiSanPham thuoc: ");
                 String loaiThuoc = sc.nextLine();
                 System.out.print("Nhap cong dung: ");
                 String congDung = sc.nextLine();
@@ -76,14 +95,14 @@ public class HeThongQuanLy {
                 sp = new Thuoc(ma, ten, loaiSanPham, maNCC, giaNhap, giaBan, soLuong, hsd, loaiThuoc, congDung , (ketoa==1)?true:false);
                 break;
             case "mypham":
-                System.out.print("Nhap loai my pham: ");
+                System.out.print("Nhap loaiSanPham my pham: ");
                 String loaiMyPham = sc.nextLine();
-                System.out.print("Nhap loai da phu hop: ");
+                System.out.print("Nhap loaiSanPham da phu hop: ");
                 String loaiDaPhuHop = sc.nextLine();
                 sp = new MyPham(ma, ten, loaiSanPham, maNCC, giaNhap, giaBan, soLuong, hsd, loaiMyPham, loaiDaPhuHop);
                 break;
             case "tpcn":
-                System.out.print("Nhap loai thuc pham chuc nang: ");
+                System.out.print("Nhap loaiSanPham thuc pham chuc nang: ");
                 String loaiTPCN = sc.nextLine();
                 System.out.print("Bo sung duong chat: ");
                 String bsdc = sc.nextLine();
@@ -163,12 +182,20 @@ public class HeThongQuanLy {
             finalSp.setSoLuongTon(Integer.parseInt(sc.nextLine()));
         });
         phuongThucChung.add(() -> {
-            System.out.print("Nhap han su dung moi (yyyy-MM-dd): ");
-            finalSp.setHSD(LocalDate.parse(sc.nextLine(), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+            LocalDate hsdMoi = nhapNgayHopLe("Nhap han su dung moi");
+            finalSp.setHSD(hsdMoi);
         });
         phuongThucChung.add(() -> {
-            System.out.print("Nhap loai san pham moi: ");
-            finalSp.setLoaiSanPham(sc.nextLine());
+            System.out.print("Nhap loai san pham moi (Thuoc/ThucPhamChucNang/MyPham/DungCuYTe): ");
+            String loaiSanPham = sc.nextLine().trim();
+            while (!loaiSanPham.trim().equalsIgnoreCase("thuoc") &&
+                    !loaiSanPham.trim().equalsIgnoreCase("thucphamchucnang") &&
+                    !loaiSanPham.trim().equalsIgnoreCase("mypham") &&
+                    !loaiSanPham.trim().equalsIgnoreCase("dungcuyte")){
+                System.out.print("Loai san pham phai chi duoc la 4 loai san pham tren! Vui long nhap lai: ");
+                loaiSanPham = sc.nextLine().trim();
+            }
+            finalSp.setLoaiSanPham(loaiSanPham);
         });
         phuongThucChung.add(() -> {
             System.out.print("Nhap ma nha cung cap moi: ");
@@ -358,8 +385,8 @@ public class HeThongQuanLy {
             System.out.print("Gioi tinh phai la nam hoac nu! Vui long nhap lai: ");
             gioiTinh = sc.nextLine();
         }
-        System.out.print("Nhap ngay sinh (yyyy-MM-dd): ");
-        LocalDate ngaySinh = LocalDate.parse(sc.nextLine());
+//        System.out.print("Nhap ngay sinh (yyyy-MM-dd): ");
+        LocalDate ngaySinh = nhapNgayHopLe("Nhap ngay sinh");
         System.out.print("Nhap so dien thoai: ");
         String sdt = sc.nextLine();
         DiaChi diaChi = new DiaChi();
@@ -439,8 +466,8 @@ public class HeThongQuanLy {
             finalNv.setGioiTinh(gioiTinh);
         });
         phuongThucChung.add(() -> {
-            System.out.print("Nhap ngay sinh (yyyy-MM-dd): ");
-            LocalDate ngaySinh = LocalDate.parse(sc.nextLine());
+//            System.out.print("Nhap ngay sinh (yyyy-MM-dd): ");
+            LocalDate ngaySinh = nhapNgayHopLe("Nhap ngay sinh moi");
             finalNv.setNgaySinh(ngaySinh);
         });
         phuongThucChung.add(() -> {
@@ -802,8 +829,8 @@ public class HeThongQuanLy {
             System.out.print("Chi chap nhan 'Nam' hoac 'Nu'. Nhap lai: ");
             gioiTinh = sc.nextLine();
         }
-        System.out.print("Nhap ngay sinh (yyyy-MM-dd): ");
-        LocalDate ngaySinh = LocalDate.parse(sc.nextLine());
+//        System.out.print("Nhap ngay sinh (yyyy-MM-dd): ");
+        LocalDate ngaySinh = nhapNgayHopLe("Nhap ngay sinh");
         System.out.print("Nhap so dien thoai: ");
         String sdt = sc.nextLine();
         DiaChi diaChi = new DiaChi();
@@ -850,8 +877,8 @@ public class HeThongQuanLy {
                 kh.setGioiTinh(gt);
             }
             case 3 -> {
-                System.out.print("Nhap ngay sinh (yyyy-MM-dd): ");
-                LocalDate ns = LocalDate.parse(sc.nextLine());
+//                System.out.print("Nhap ngay sinh (yyyy-MM-dd): ");
+                LocalDate ns = nhapNgayHopLe("Nhap ngay sinh moi");
                 kh.setNgaySinh(ns);
             }
             case 4 -> {
@@ -978,11 +1005,11 @@ public class HeThongQuanLy {
         System.out.print("Nhap dieu kien ap dung (gia tri don hang toi thieu): ");
         double dieuKien = Double.parseDouble(sc.nextLine());
 
-        System.out.print("Nhap ngay bat dau (yyyy-MM-dd): ");
-        LocalDate ngayBD = LocalDate.parse(sc.nextLine());
+//        System.out.print("Nhap ngay bat dau (yyyy-MM-dd): ");
+        LocalDate ngayBD = nhapNgayHopLe("Nhap ngay bat dau");
 
-        System.out.print("Nhap ngay ket thuc (yyyy-MM-dd): ");
-        LocalDate ngayKT = LocalDate.parse(sc.nextLine());
+//        System.out.print("Nhap ngay ket thuc (yyyy-MM-dd): ");
+        LocalDate ngayKT = nhapNgayHopLe("Nhap ngay ket thuc");
 
         KhuyenMai km = new KhuyenMai(maKM, tenKM, ngayBD, ngayKT, phanTramGiam, dieuKien);
         dsKM.them(km);
@@ -1021,12 +1048,14 @@ public class HeThongQuanLy {
                 km.setTenKhuyenMai(sc.nextLine());
             }
             case 2 -> {
-                System.out.print("Nhap ngay bat dau moi (yyyy-MM-dd): ");
-                km.setNgayBatDau(LocalDate.parse(sc.nextLine()));
+//                System.out.print("Nhap ngay bat dau moi (yyyy-MM-dd): ");
+                LocalDate ngbdMoi = nhapNgayHopLe("Nhap ngay bat dau moi");
+                km.setNgayBatDau(ngbdMoi);
             }
             case 3 -> {
-                System.out.print("Nhap ngay ket thuc moi (yyyy-MM-dd): ");
-                km.setNgayKetThuc(LocalDate.parse(sc.nextLine()));
+//                System.out.print("Nhap ngay ket thuc moi (yyyy-MM-dd): ");
+                LocalDate ngktMoi = nhapNgayHopLe("Nhap ngay ket thuc moi");
+                km.setNgayKetThuc(ngktMoi);
             }
             case 4 -> {
                 System.out.print("Nhap phan tram giam moi (%): ");
@@ -1111,29 +1140,28 @@ public class HeThongQuanLy {
 
         System.out.print("Nhap ma hoa don ban: ");
         String maHDB = sc.nextLine().trim().toUpperCase();
-        while (dsHDB.timKiemDoiTuong(maHDB) != null) {
+        while (dsHDB.tonTaiDoiTuong(maHDB) ) {
             System.out.print("Ma hoa don da ton tai! Vui long nhap lai: ");
             maHDB = sc.nextLine().trim().toUpperCase();
         }
 
         // Ngay lap
-        LocalDate ngayLap = null;
-        while (ngayLap == null) {
-            System.out.print("Nhap ngay lap (yyyy-MM-dd): ");
-            try {
-                ngayLap = LocalDate.parse(sc.nextLine().trim());
-            } catch (DateTimeParseException e) {
-                System.out.println("Ngay khong hop le! Vui long nhap lai.");
-            }
-        }
+        LocalDate ngayLap = nhapNgayHopLe("Nhap ngay lap");
+//        while (ngayLap == null) {
+//            System.out.print("Nhap ngay lap (yyyy-MM-dd): ");
+//            try {
+//                ngayLap = LocalDate.parse(sc.nextLine().trim());
+//            } catch (DateTimeParseException e) {
+//                System.out.println("Ngay khong hop le! Vui long nhap lai.");
+//            }
+//        }
 
         // Ma nhan vien lap
-        String maNV;
-        while (true) {
-            System.out.print("Nhap ma nhan vien ban thuoc: ");
+        System.out.print("Nhap ma nhan vien ban thuoc: ");
+        String maNV = sc.nextLine().trim().toUpperCase();
+        while (!dsNV.tonTaiDoiTuong(maNV)) {
+            System.out.print("Ma nhan vien khong hop le ! Vui long nhap lai: ");
             maNV = sc.nextLine().trim().toUpperCase();
-            if (!dsNV.tonTaiDoiTuong(maNV)) break;
-            System.out.println("Ma nhan vien khong hop le hoac khong phai NV ban thuoc!");
         }
         // Ma khach hang
         System.out.print("Nhap ma khach hang: ");
@@ -1144,12 +1172,12 @@ public class HeThongQuanLy {
         }
 
         // Ma khuyen mai
-        System.out.print("Nhap ma khuyen mai (bo trong neu khong co): ");
-        String maKM = sc.nextLine().trim().toUpperCase();
-        if (!maKM.isEmpty() && !dsKM.tonTaiDoiTuong(maKM)) {
-            System.out.println("Ma khuyen mai khong ton tai -> bo qua.");
-            maKM = "";
-        }
+//        System.out.print("Nhap ma khuyen mai (bo trong neu khong co): ");
+//        String maKM = sc.nextLine().trim().toUpperCase();
+//        if (!maKM.isEmpty() && !dsKM.tonTaiDoiTuong(maKM)) {
+//            System.out.println("Ma khuyen mai khong ton tai -> bo qua.");
+//            maKM = "";
+//        }
 
         // Chi tiet hoa don
         Map<String, Integer> chiTiet = new HashMap<>();
@@ -1180,9 +1208,28 @@ public class HeThongQuanLy {
             }
             chiTiet.put(maSP, sl);
         }
-
-        HoaDonBanHang hdb = new HoaDonBanHang(maHDB, ngayLap, 0, chiTiet, maKH, maNV, maKM);
-        hdb.tinhTongTien(dsSP, dsKM);
+        // Tự tìm mã khuyến mãi thích hợp và tính giá đã giảm
+        double tongTienChuaGiam = 0;
+        for(Map.Entry<String, Integer> entry : chiTiet.entrySet()) {
+            String maSP = entry.getKey();
+            int soLuong = entry.getValue();
+            SanPham sp = dsSP.timKiemDoiTuong(maSP);
+            if(sp != null){
+                tongTienChuaGiam = sp.getGiaBan() * soLuong;
+            }
+        }
+        String maKM = "";
+        double tongTienDaGiam = tongTienChuaGiam;
+        for(KhuyenMai check : dsKM.getDsKhuyenMai()){
+            if(tongTienChuaGiam >= check.getDieuKienApDung()){
+                double bienTam = check.apDungKhuyenMai(tongTienChuaGiam);
+                if(bienTam < tongTienDaGiam){
+                    tongTienDaGiam =bienTam;
+                    maKM = check.getMaKhuyenMai();
+                }
+            }
+        }
+        HoaDonBanHang hdb = new HoaDonBanHang(maHDB, ngayLap, tongTienDaGiam, chiTiet, maKH, maNV, maKM);
 
         if (dsHDB.them(hdb)) {
             // Trừ số lượng tồn kho
@@ -1218,16 +1265,16 @@ public class HeThongQuanLy {
 
         // Ngay lap
         phuongThuc.add(() -> {
-            LocalDate ngayMoi = null;
-            while (ngayMoi == null) {
-                System.out.print("Nhap ngay moi (yyyy-MM-dd): ");
-                try {
-                    ngayMoi = LocalDate.parse(sc.nextLine().trim());
-                    finalHDB.setNgayLap(ngayMoi);
-                } catch (DateTimeParseException e) {
-                    System.out.println("Dinh dang sai!");
-                }
-            }
+            LocalDate ngayMoi = nhapNgayHopLe("Nhap ngay moi");
+//            while (ngayMoi == null) {
+//                System.out.print("Nhap ngay moi (yyyy-MM-dd): ");
+//                try {
+//                    ngayMoi = LocalDate.parse(sc.nextLine().trim());
+//                    finalHDB.setNgayLap(ngayMoi);
+//                } catch (DateTimeParseException e) {
+//                    System.out.println("Dinh dang sai!");
+//                }
+//            }
         });
 
         // Ma NV
@@ -1259,11 +1306,38 @@ public class HeThongQuanLy {
         phuongThuc.add(() -> {
             System.out.print("Nhap ma khuyen mai moi (bo trong neu khong co): ");
             String ma = sc.nextLine().trim().toUpperCase();
-            if (ma.isEmpty() || dsKM.tonTaiDoiTuong(ma)) {
-                finalHDB.setMaKhuyenMai(ma);
-            } else {
-                System.out.println("Ma KM khong ton tai -> bo qua.");
+            boolean coHieu = true;
+            while (coHieu){
+                if(!ma.isEmpty() && dsKM.tonTaiDoiTuong(ma)){
+                    KhuyenMai kmMoi = dsKM.timKiemDoiTuong(ma);
+                    if (finalHDB.tinhTongTien(dsSP) > kmMoi.getDieuKienApDung() && kmMoi.conHan()){
+                        finalHDB.setMaKhuyenMai(ma);
+                        finalHDB.tinhTongTienSauGiamGia(dsSP,dsKM);
+                        System.out.println("Thay doi ma khuyen mai va cap nhat tong tien thanh cong!");
+                        coHieu = false;
+                    } else {
+                        System.out.println("Ma KM khong hop le!");
+                        System.out.print("Neu muon khong muon thay doi ma nhan phim X khong thi nhan phim bat ky: ");
+                        String luaChon = sc.nextLine();
+                        if(luaChon.equalsIgnoreCase("x")){
+                            coHieu = false;
+                            ma = "";
+                            finalHDB.setMaKhuyenMai(ma);
+                        }
+                        else {
+                            System.out.print("Moi nhap lai ma khuyen  mai: ");
+                            ma = sc.nextLine().trim().toUpperCase();
+                        }
+                    }
+                } else {
+                    coHieu = false;
+                }
             }
+//            if (ma.isEmpty() || dsKM.tonTaiDoiTuong(ma)) {
+//                finalHDB.setMaKhuyenMai(ma);
+//            } else {
+//                System.out.println("Ma KM khong ton tai -> bo qua.");
+//            }
         });
 
         // Menu
@@ -1363,16 +1437,16 @@ public class HeThongQuanLy {
         }
 
         // 2. Nhập và kiểm tra Ngày lập
-        LocalDate ngayLap = null;
-        while (ngayLap == null) {
-            System.out.print("Nhap ngay lap (yyyy-MM-dd): ");
-            String ngayStr = sc.nextLine().trim();
-            try {
-                ngayLap = LocalDate.parse(ngayStr);
-            } catch (DateTimeParseException e) {
-                System.out.println("Dinh dang ngay khong hop le! Vui long nhap lai.");
-            }
-        }
+        LocalDate ngayLap = nhapNgayHopLe("Nhap ngay lap");
+//        while (ngayLap == null) {
+//            System.out.print("Nhap ngay lap (yyyy-MM-dd): ");
+//            String ngayStr = sc.nextLine().trim();
+//            try {
+//                ngayLap = LocalDate.parse(ngayStr);
+//            } catch (DateTimeParseException e) {
+//                System.out.println("Dinh dang ngay khong hop le! Vui long nhap lai.");
+//            }
+//        }
 
         // 3. Nhập và kiểm tra Mã quản lý (phải là nhân viên loại QuanLy)
         String maQL;
@@ -1477,17 +1551,17 @@ public class HeThongQuanLy {
 
         // 1. Sua ngay lap
         phuongThuc.add(() -> {
-            LocalDate ngayLapMoi = null;
-            while (ngayLapMoi == null) {
-                System.out.print("Nhap ngay lap moi (yyyy-MM-dd): ");
-                String ngayStr = sc.nextLine().trim();
-                try {
-                    ngayLapMoi = LocalDate.parse(ngayStr);
-                    finalHDN.setNgayLap(ngayLapMoi);
-                } catch (DateTimeParseException e) {
-                    System.out.println("Dinh dang ngay khong hop le! Vui long nhap lai.");
-                }
-            }
+            LocalDate ngayLapMoi = nhapNgayHopLe("Nhap ngay lap moi");
+//            while (ngayLapMoi == null) {
+//                System.out.print("Nhap ngay lap moi (yyyy-MM-dd): ");
+//                String ngayStr = sc.nextLine().trim();
+//                try {
+//                    ngayLapMoi = LocalDate.parse(ngayStr);
+//                    finalHDN.setNgayLap(ngayLapMoi);
+//                } catch (DateTimeParseException e) {
+//                    System.out.println("Dinh dang ngay khong hop le! Vui long nhap lai.");
+//                }
+//            }
         });
 
         // 2. Sua ma quan ly

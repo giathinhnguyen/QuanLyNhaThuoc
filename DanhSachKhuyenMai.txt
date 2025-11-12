@@ -1,9 +1,9 @@
-KM01;Giam gia thuoc cam cum;2025-01-01;2025-03-31;10;200000
+KM01;Giam gia thuoc cam cum;2025-01-01;2026-03-31;10;200000
 KM02;Mua my pham tang mat na;2025-02-15;2025-04-15;15;300000
 KM03;Khuyen mai vitamin tong hop;2025-03-01;2025-05-01;12;250000
 KM04;Giam gia thuc pham chuc nang;2025-01-10;2025-02-28;20;400000
 KM05;Combo cham soc da;2025-04-01;2025-06-30;18;350000
-KM06;Uu dai thuoc ho - khang sinh;2025-05-01;2025-07-31;8;150000
+KM06;Uu dai thuoc ho - khang sinh;2025-05-01;2026-07-31;8;150000
 KM07;Tang voucher khi mua tren 1 trieu;2025-06-01;2025-08-31;25;1000000
 KM08;Giam gia 30% thiet bi y te;2025-03-10;2025-05-31;30;500000
 KM09;Mua 2 tang 1 thuc pham dinh duong;2025-02-01;2025-03-30;16;280000

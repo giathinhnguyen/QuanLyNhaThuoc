@@ -95,7 +95,7 @@ public class KhachHang extends Nguoi implements LayThongTin {
         HoaDonBanHang hdMoi = dsHDB.timKiemDoiTuong(maHDMoi);
 
         if (hdMoi != null) {
-            double tongTienThanhToan = hdMoi.tinhTongTien(dsSP, dsKM);
+            double tongTienThanhToan = hdMoi.tinhTongTienSauGiamGia(dsSP, dsKM);
 
             if (tongTienThanhToan > 0) {
                 this.tongChiTieu += tongTienThanhToan;
