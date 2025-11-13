@@ -42,7 +42,7 @@ public class NhanVienBanThuoc extends NhanVien implements LayThongTin{
 
     @Override
     public double tinhLuong() {
-        double luong = luongCoBan + (soNamLam * 100) - (soNgayNghi * 20);
+        double luong = luongCoBan + (soNamLam * 100) - (soNgayNghi * 1);
         return luong;
     }
     @Override
@@ -54,7 +54,7 @@ public class NhanVienBanThuoc extends NhanVien implements LayThongTin{
         String thuocTinhRieng = String.valueOf(this.soNgayNghi);
         // Format: %-15s %-20s %-10s %-12s %-10s %-25s %-10s %-10s %-15.0f %-50s
         return String.format(
-                "%-15s %-20s %-10s %-12s %-10s %-25s %-10s %-10s %-15.0f %-50s",
+                "%-15s %-20s %-10s %-12s %-10s %-35s %-15s %-10s %-15.0f %-50s",
                 this.maNhanVien, this.hoTen, this.gioiTinh,
                 this.ngaySinh.toString(), this.SDT, diaChiFull,
                 "NV ban thuoc", thuocTinhRieng, this.tinhLuong(), danhSachHD

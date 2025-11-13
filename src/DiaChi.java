@@ -35,17 +35,16 @@ public class DiaChi implements LayThongTin{
         this.duong = duong;
         this.soNha = soNha;
     }
-    public DiaChi nhapDiaChi(){
+    public void nhapDiaChi() {
         Scanner sc = new Scanner(System.in);
         System.out.print("Nhap tinh: ");
-        String tinh = sc.nextLine();
+        this.tinh = sc.nextLine(); // DÙNG this.tinh
         System.out.print("Nhap quan: ");
-        String quan = sc.nextLine();
+        this.quan = sc.nextLine(); // DÙNG this.quan
         System.out.print("Nhap duong: ");
-        String duong = sc.nextLine();
+        this.duong = sc.nextLine(); // DÙNG this.duong
         System.out.print("Nhap so nha: ");
-        String soNha = sc.nextLine();
-        return new DiaChi(tinh, quan, duong, soNha);
+        this.soNha = sc.nextLine(); // DÙNG this.soNha
     }
     public String[] getTatCaThuocTinh() {
         return new String[]{soNha, duong, quan, tinh};

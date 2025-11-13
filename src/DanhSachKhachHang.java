@@ -96,7 +96,7 @@ public class DanhSachKhachHang implements ChucNang<KhachHang>, Doc_Ghi{
                 return;
             }
             System.out.println("\n============================================ DANH SACH KHACH HANG ==============================================");
-            System.out.printf("%-5s %-10s %-25s %-12s %-8s %-12s %-25s %-12s %-12s %-15s %-50s%n",
+            System.out.printf("%-5s %-10s %-20s %-12s %-8s %-12s %-40s %-12s %-12s %-15s %-50s%n",
                     "STT", "Ma KH", "Ho ten", "Ngay sinh", "GT", "SDT", "Dia chi", "Hang TV", "Diem TL", "Tong chi tieu", "Ma hoa don da mua");
             System.out.println("=========================================================================================================================================================================");
 

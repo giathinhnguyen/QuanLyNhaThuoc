@@ -51,7 +51,7 @@ public class QuanLy extends NhanVien implements LayThongTin {
         String thuocTinhRieng = String.valueOf(this.heSoPhuCapQuanLy); // HSPCQL
         // Format: %-15s %-20s %-10s %-12s %-10s %-25s %-10s %-10s %-15.0f %-50s
         return String.format(
-                "%-15s %-20s %-10s %-12s %-10s %-25s %-10s %-10s %-15.0f %-50s",
+                "%-15s %-20s %-10s %-12s %-10s %-35s %-15s %-10s %-15.0f %-50s",
                 this.maNhanVien, this.hoTen, this.gioiTinh, this.ngaySinh.toString(),
                 this.SDT, diaChiFull, "QuanLy",
                 thuocTinhRieng, this.tinhLuong(), danhSachHD

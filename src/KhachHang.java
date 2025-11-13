@@ -137,7 +137,7 @@ public class KhachHang extends Nguoi implements LayThongTin {
                 String.join(", ", this.dsMaHoaDon) :
                 "";
         return String.format(
-                "%-10s %-25s %-12s %-8s %-12s %-25s %-12s %-12.0f %-15.0f %-50s",
+                "%-10s %-20s %-12s %-8s %-12s %-40s %-12s %-12.0f %-15.0f %-50s",
                 this.maKhachHang, this.hoTen, this.ngaySinh.toString(),
                 this.gioiTinh, this.SDT, diaChiFull, this.hangThanhVien,
                 this.diemTichLuy, this.tongChiTieu, danhSachHD
